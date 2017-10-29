@@ -14,7 +14,7 @@ Procedura di installazione e aggiornamento secondo gli standard previsti dal CMS
 Il package utilizza il core di Joomla! per le operazioni di autenticazione utente e registrazione nuovo utente. Le impostazioni di Joomla! sono quelle standard accessibili attraverso le opzioni della Gestione Utenti e del plugin User - Joomla!
 Agli utenti registrati con SPiD for Joomla! sono attribuiti il codice fiscale come username e l'indirizzo Email di registrazione all'IdP
 
-## Developer e manteiner
+## Developer
 Helios Ciancio [eshiol](https://github.com/eshiol)
 
 ## Note
