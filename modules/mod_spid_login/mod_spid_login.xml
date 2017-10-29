@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.7" type="module" client="site" method="upgrade">
+  <name>mod_spid_login</name>
+  <author>Helios Ciancio</author>
+  <creationDate>October 2017</creationDate>
+  <copyright>(C) 2017 Helios Ciancio. All rights reserved.</copyright>
+  <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
+  <authorEmail>info@eshiol.it</authorEmail>
+  <authorUrl>www.eshiol.it</authorUrl>
+  <version>3.7.5.43</version>
+  <description>MOD_SPID_LOGIN_XML_DESCRIPTION</description>
+  <updateservers>
+    <server type="module" priority="2" name="SPiD Login">https://www.eshiol.it/files/spid/mod_spid_login.xml</server>
+  </updateservers>
+  <files>
+    <filename module="mod_spid_login">mod_spid_login.php</filename>
+    <folder>fields</folder>
+    <folder>tmpl</folder>
+  </files>
+  <media destination="mod_spid_login" folder="media">
+    <folder>css</folder>
+    <folder>img</folder>
+    <folder>js</folder>
+  </media>
+  <languages folder="language">
+    <language tag="en-GB">en-GB/en-GB.mod_spid_login.ini</language>
+    <language tag="en-GB">en-GB/en-GB.mod_spid_login.sys.ini</language>
+    <language tag="it-IT">it-IT/it-IT.mod_spid_login.ini</language>
+    <language tag="it-IT">it-IT/it-IT.mod_spid_login.sys.ini</language>
+  </languages>
+  <config>
+    <fields name="params">
+      <fieldset name="basic" addfieldpath="/modules/mod_spid_login/fields">
+        <field name="authsource" type="authsource" label="MOD_SPID_LOGIN_AUTHSOURCE_LABEL" description="MOD_SPID_LOGIN_AUTHSOURCE_LABEL" default="default-sp"/>
+        <field name="size" type="list" label="MOD_SPID_LOGIN_SIZE_LABEL" description="MOD_SPID_LOGIN_SIZE_LABEL" default="m">
+          <option value="s">MOD_SPID_LOGIN_SMALL</option>
+          <option value="m">MOD_SPID_LOGIN_MEDIUM</option>
+          <option value="l">MOD_SPID_LOGIN_LARGE</option>
+          <option value="xl">MOD_SPID_LOGIN_XLARGE</option>
+        </field>
+        <field name="show_infolink" type="radio" label="MOD_SPID_LOGIN_FIELD_SHOW_INFOLINK_LABEL" description="MOD_SPID_LOGIN_FIELD_SHOW_INFOLINK_DESC" class="btn-group btn-group-yesno" default="1">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+        <field name="url_infolink" type="text" filter="url" label="MOD_SPID_LOGIN_FIELD_URL_INFOLINK_LABEL" description="MOD_SPID_LOGIN_FIELD_URL_INFOLINK_DESC" class="input-xxlarge input-large-text" hint="MOD_SPID_LOGIN_FIELD_URL_INFOLINK_DEFAULT" showon="show_infolink:1"/>
+        <field name="show_registrationlink" type="radio" label="MOD_SPID_LOGIN_FIELD_SHOW_REGISTRATIONLINK_LABEL" description="MOD_SPID_LOGIN_FIELD_SHOW_REGISTRATIONLINK_DESC" class="btn-group btn-group-yesno" default="1">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+        <field name="url_registrationlink" type="text" filter="url" label="MOD_SPID_LOGIN_FIELD_URL_REGISTRATIONLINK_LABEL" description="MOD_SPID_LOGIN_FIELD_URL_REGISTRATIONLINK_DESC" class="input-xxlarge input-large-text" hint="MOD_SPID_LOGIN_FIELD_URL_REGISTRATIONLINK_DEFAULT" showon="show_registrationlink:1"/>
+        <field name="show_helplink" type="radio" label="MOD_SPID_LOGIN_FIELD_SHOW_HELPLINK_LABEL" description="MOD_SPID_LOGIN_FIELD_SHOW_HELPLINK_DESC" class="btn-group btn-group-yesno" default="1">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+        <field name="url_helplink" type="text" filter="url" label="MOD_SPID_LOGIN_FIELD_URL_HELPLINK_LABEL" description="MOD_SPID_LOGIN_FIELD_URL_HELPLINK_DESC" class="input-xxlarge input-large-text" hint="MOD_SPID_LOGIN_FIELD_URL_HELPLINK_DEFAULT" showon="show_helplink:1"/>
+      </fieldset>
+      <fieldset name="advanced">
+        <field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC"/>
+        <field name="moduleclass_sfx" type="textarea" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" rows="3"/>
+        <field name="cache" type="list" label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC" default="1">
+          <option value="1">JGLOBAL_USE_GLOBAL</option>
+          <option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+        </field>
+        <field name="cache_time" type="text" label="COM_MODULES_FIELD_CACHE_TIME_LABEL" description="COM_MODULES_FIELD_CACHE_TIME_DESC" default="900"/>
+        <field name="cachemode" type="hidden" default="static">
+          <option value="static"/>
+        </field>
+      </fieldset>
+      <fieldset name="debug" label="MOD_SPID_LOGIN_DEBUG">
+        <field name="debug" type="radio" default="0" class="btn-group btn-group-yesno" description="MOD_SPID_LOGIN_DEBUG_SYSTEM_DESC" label="MOD_SPID_LOGIN_DEBUG_SYSTEM_LABEL">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+        <field name="log" type="text" label="MOD_SPID_LOGIN_DEBUG_FILENAME_LABEL" description="MOD_SPID_LOGIN_DEBUG_FILENAME_DESC" default="eshiol.log.php" showon="debug:1"/>
+        <field name="phpconsole" type="radio" class="btn-group btn-group-yesno" default="0" description="MOD_SPID_LOGIN_DEBUG_PHPCONSOLE_DESC" label="MOD_SPID_LOGIN_DEBUG_PHPCONSOLE_LABEL">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+      </fieldset>
+    </fields>
+  </config>
+</extension>

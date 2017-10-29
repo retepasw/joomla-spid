@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.7" type="plugin" group="authentication" method="upgrade">
+  <name>plg_authentication_spid</name>
+  <author>Helios Ciancio</author>
+  <creationDate>October 2017</creationDate>
+  <copyright>(C) 2017 Helios Ciancio. All rights reserved.</copyright>
+  <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
+  <authorEmail>info@eshiol.it</authorEmail>
+  <authorUrl>www.eshiol.it</authorUrl>
+  <version>3.7.5.91</version>
+  <description>PLG_AUTHENTICATION_SPID_XML_DESCRIPTION</description>
+  <updateservers>
+    <server type="plugin" priority="2" name="Authentication - SPiD">https://www.eshiol.it/files/spid/plg_authentication_spid.xml</server>
+  </updateservers>
+  <files>
+    <filename plugin="spid">spid.php</filename>
+    <filename>registration.php</filename>
+  </files>
+  <languages folder="language">
+    <language tag="en-GB">en-GB/en-GB.plg_authentication_spid.ini</language>
+    <language tag="en-GB">en-GB/en-GB.plg_authentication_spid.sys.ini</language>
+    <language tag="it-IT">it-IT/it-IT.plg_authentication_spid.ini</language>
+    <language tag="it-IT">it-IT/it-IT.plg_authentication_spid.sys.ini</language>
+  </languages>
+  <config>
+    <fields name="params">
+      <fieldset name="advanced">
+        <field name="debug" type="radio" default="0" class="btn-group btn-group-yesno" description="PLG_AUTHENTICATION_SPID_DEBUG_SYSTEM_DESC" label="PLG_AUTHENTICATION_SPID_DEBUG_SYSTEM_LABEL">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+        <field name="log" type="text" label="PLG_AUTHENTICATION_SPID_DEBUG_FILENAME_LABEL" description="PLG_AUTHENTICATION_SPID_DEBUG_FILENAME_DESC" default="eshiol.log.php" showon="debug:1"/>
+        <field name="phpconsole" type="radio" class="btn-group btn-group-yesno" default="0" description="PLG_AUTHENTICATION_SPID_DEBUG_PHPCONSOLE_DESC" label="PLG_AUTHENTICATION_SPID_DEBUG_PHPCONSOLE_LABEL">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+      </fieldset>
+    </fields>
+  </config>
+</extension>
