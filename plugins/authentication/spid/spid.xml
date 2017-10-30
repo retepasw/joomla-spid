@@ -7,7 +7,7 @@
   <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
   <authorEmail>info@eshiol.it</authorEmail>
   <authorUrl>www.eshiol.it</authorUrl>
-  <version>3.7.5.91</version>
+  <version>3.7.6.92</version>
   <description>PLG_AUTHENTICATION_SPID_XML_DESCRIPTION</description>
   <updateservers>
     <server type="plugin" priority="2" name="Authentication - SPiD">https://www.eshiol.it/files/spid/plg_authentication_spid.xml</server>
