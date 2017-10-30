@@ -3,8 +3,10 @@
   <name>pkg_spid</name>
   <author>Helios Ciancio</author>
   <creationDate>October 2017</creationDate>
+  <copyright>(C) 2017 Helios Ciancio. All rights reserved.</copyright>
+  <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
   <packagename>spid</packagename>
-  <version>3.7.2.13</version>
+  <version>3.7.3.15</version>
   <url>https://www.eshiol.it</url>
   <packager>Helios Ciancio</packager>
   <packagerurl>https://www.eshiol.it/</packagerurl>
@@ -13,7 +15,7 @@
     <server type="extension" priority="2" name="SPiD">https://www.eshiol.it/files/spid/spid.xml</server>
   </updateservers>
   <files>
-    <folder type="plugin" id="spid" group="authentication">plg_authentication_spid-3.7.5.91.zip</folder>
+    <folder type="plugin" id="spid" group="authentication">plg_authentication_spid-3.7.6.92.zip</folder>
     <folder type="plugin" id="spid" group="user">plg_user_spid-3.7.2.15.zip</folder>
     <folder type="module" id="spid" client="site">mod_spid_login-3.7.5.43.zip</folder>
   </files>
