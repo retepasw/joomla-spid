@@ -6,7 +6,6 @@
 .settings
 .buildpath
 .project
-CHANGELOG
 
 # Windows image file caches
 Thumbs.db
@@ -30,7 +29,6 @@ $RECYCLE.BIN/
 
 # Joomla
 CHANGELOG
-LICENSE
 
 # =========================
 # Operating System Files
