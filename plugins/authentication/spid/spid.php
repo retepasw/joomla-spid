@@ -1,6 +1,6 @@
 <?php
 /**
- * @version		3.7.5 plugins/authentication/spid/spid.php
+ * @version		3.7.7 plugins/authentication/spid/spid.php
  *
  * @package		SPiD
  * @subpackage	plg_authentication_spid
@@ -128,8 +128,6 @@ class plgAuthenticationSpid extends JPlugin
 
 				// Save the authentication source in the session.
 				JFactory::getSession()->set('spid.authsource', $authsource);
-
-				return true;
 			}
 			elseif (strtoupper(substr($username, 0, 6)) !== "TINIT-")
 			{
@@ -142,10 +140,7 @@ class plgAuthenticationSpid extends JPlugin
 				$response->fullname = $attributes['name'][0].' '.$attributes['familyName'][0];
 
 				// Save the authentication source in the session.
-				// $app->setUserState('spid.authsource', $authsource);
 				JFactory::getSession()->set('spid.authsource', $authsource);
-
-				return true;
 			}
 			elseif ($uparams->get('allowUserRegistration'))
 			{
@@ -170,16 +165,16 @@ class plgAuthenticationSpid extends JPlugin
 					// Get the database object and a new query object.
 					$db = JFactory::getDbo();
 					$query = $db->getQuery(true);
-					
+
 					// Build the query.
 					$query->select('COUNT(*)')
 						->from('#__users')
 						->where('email = ' . $db->q($data['email']));
-					
+
 					// Set and query the database.
 					$db->setQuery($query);
 					$duplicate = (bool) $db->loadResult();
-					
+
 					$response->message = ($duplicate ? JText::_('PLG_AUTHENTICATION_SPID_REGISTER_EMAIL1_MESSAGE') : 'USER NOT EXISTS AND FAILED THE CREATION PROCESS');
 
 					$login_url = JUri::getInstance();
@@ -219,23 +214,17 @@ class plgAuthenticationSpid extends JPlugin
 					$app->enqueueMessage(JText::_('COM_USERS_REGISTRATION_SAVE_SUCCESS'));
 					$app->redirect(JRoute::_('index.php?option=com_users&view=login', false));
 				}
-
-				return true;
+			}
+			else
+			{
+				// Invalid user
+				$response->status        = JAuthentication::STATUS_FAILURE;
+				$response->error_message = JText::_('JGLOBAL_AUTH_NO_USER');
+				JLog::add(new JLogEntry(JText::_('JGLOBAL_AUTH_NO_USER'), JLog::DEBUG, 'plg_authentication_spid'));
 			}
 
-			// Invalid user
-			$response->status        = JAuthentication::STATUS_FAILURE;
-			$response->error_message = JText::_('JGLOBAL_AUTH_NO_USER');
-			JLog::add(new JLogEntry(JText::_('JGLOBAL_AUTH_NO_USER'), JLog::DEBUG, 'plg_authentication_spid'));
+			return true;
 		}
-		else
-		{
-			// Invalid user
-			$response->status        = JAuthentication::STATUS_FAILURE;
-			$response->error_message = JText::_('JGLOBAL_AUTH_NO_USER');
-			JLog::add(new JLogEntry(JText::_('JGLOBAL_AUTH_NO_USER'), JLog::DEBUG, 'plg_authentication_spid'));
-		}
-		return false;
 	}
 
 	function generatePassword()
