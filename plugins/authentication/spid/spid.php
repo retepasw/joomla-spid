@@ -142,7 +142,7 @@ class plgAuthenticationSpid extends JPlugin
 				// Save the authentication source in the session.
 				JFactory::getSession()->set('spid.authsource', $authsource);
 			}
-			elseif ($uparams->get('allowUserRegistration'))
+			elseif ($this->params->get('allowUserRegistration', $uparams->get('allowUserRegistration')))
 			{
 				// user data
 				$data['name'] = $attributes['name'][0].' '.$attributes['familyName'][0];
