@@ -1,10 +1,7 @@
 <?php
 /**
- * @version		3.7.5 modules/mod_spid_login/authsourcelist.php
- *
  * @package		SPiD
  * @subpackage	mod_spid_login
- * @since		3.7
  *
  * @author		Helios Ciancio <info@eshiol.it>
  * @link		http://www.eshiol.it
@@ -22,12 +19,10 @@ defined('_JEXEC') or die('Restricted access.');
 JFormHelper::loadFieldClass('list');
 
 /**
- * Form Field class for the Joomla Platform.
- * Supports an HTML select list of categories
- *
- * @package     Joomla.Legacy
- * @subpackage  Form
- * @since       11.1
+ * Form Field class for the Authsource.
+ * 
+ * @version		3.8.0
+ * @since		3.7.5
  */
 class JFormFieldAuthsource extends JFormFieldList
 {
@@ -35,7 +30,6 @@ class JFormFieldAuthsource extends JFormFieldList
 	 * The form field type.
 	 *
 	 * @var    string
-	 * @since  3.7.5
 	 */
 	public $type = 'Authsource';
 
@@ -43,7 +37,6 @@ class JFormFieldAuthsource extends JFormFieldList
 	 * Flag to tell the field to always be in multiple values mode.
 	 *
 	 * @var    boolean
-	 * @since  3.7.5
 	 */
 	protected $forceMultiple = false;
 
@@ -52,7 +45,6 @@ class JFormFieldAuthsource extends JFormFieldList
 	 *
 	 * @return  array  The field option objects.
 	 *
-	 * @since  3.7.5
 	 */
 	protected function getOptions()
 	{

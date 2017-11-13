@@ -1,10 +1,7 @@
 <?php
 /**
- * @version		3.7.7 plugins/authentication/spid/spid.php
- *
  * @package		SPiD
  * @subpackage	plg_authentication_spid
- * @since		3.7
  *
  * @author		Helios Ciancio <info@eshiol.it>
  * @link		http://www.eshiol.it
@@ -18,13 +15,16 @@
 
 defined('_JEXEC') or die;
 
+/**
+ * @version		3.8.0
+ * @since		3.7
+ */
 class plgAuthenticationSpid extends JPlugin
 {
 	/**
 	 * Load the language file on instantiation.
 	 *
 	 * @var    boolean
-	 * @since  3.7
 	 */
 	protected $autoloadLanguage = true;
 
@@ -33,7 +33,6 @@ class plgAuthenticationSpid extends JPlugin
 	 *
 	 * @param  object  $subject  The object to observe
 	 * @param  array   $config   An array that holds the plugin configuration
-	 * @since  3.7
 	 */
 	function __construct(&$subject, $config)
 	{
@@ -80,8 +79,6 @@ class plgAuthenticationSpid extends JPlugin
 	 * @param   object  &$response    Authentication response object
 	 *
 	 * @return  boolean
-	 *
-	 * @since   3.7
 	 */
 	public function onUserAuthenticate($credentials, $options, &$response)
 	{

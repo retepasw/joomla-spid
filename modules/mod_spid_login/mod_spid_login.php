@@ -1,10 +1,7 @@
 <?php
 /**
- * @version		3.7.4 modules/mod_spid_login/mod_spid_login.php
- *
  * @package		SPiD
  * @subpackage	mod_spid_login
- * @since		3.7
  *
  * @author		Helios Ciancio <info@eshiol.it>
  * @link		http://www.eshiol.it
@@ -18,6 +15,11 @@
 
 // no direct access
 defined('_JEXEC') or die;
+
+/**
+ * @version		3.8.0
+ * @since		3.7
+ */
 
 // Include the login functions only once
 JLoader::register('ModLoginHelper', dirname(__DIR__) . '/mod_login/helper.php');
