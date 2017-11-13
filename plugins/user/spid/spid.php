@@ -1,10 +1,7 @@
 <?php
 /**
- * @version		3.7.2 plugins/user/spid/spid.php
- *
  * @package		SPiD
  * @subpackage	plg_user_spid
- * @since		3.7
  *
  * @author		Helios Ciancio <info@eshiol.it>
  * @link		http://www.eshiol.it
@@ -18,6 +15,10 @@
 
 defined('_JEXEC') or die;
 
+/**
+ * @version		3.7.3
+ * @since		3.7
+ */
 class plgUserSpid extends JPlugin
 {
 	/**
@@ -96,9 +97,12 @@ class plgUserSpid extends JPlugin
 
 		// Load the authentication source from the session.
 		$authsource = JFactory::getSession()->get('spid.authsource', 'default-sp');
-		
+
 		$as = new SimpleSAML_Auth_Simple($authsource);
-		$as->logout();
+		if ($as->isAuthenticated())
+		{
+		    $as->logout();
+		}
 
 		return true;
 	}
