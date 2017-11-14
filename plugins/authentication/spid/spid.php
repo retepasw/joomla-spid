@@ -24,7 +24,7 @@ class plgAuthenticationSpid extends JPlugin
 	/**
 	 * Load the language file on instantiation.
 	 *
-	 * @var    boolean
+	 * @var	boolean
 	 */
 	protected $autoloadLanguage = true;
 
@@ -75,8 +75,8 @@ class plgAuthenticationSpid extends JPlugin
 	 * This method should handle any authentication and report back to the subject
 	 *
 	 * @param   array   $credentials  Array holding the user credentials
-	 * @param   array   $options      Array of extra options
-	 * @param   object  &$response    Authentication response object
+	 * @param   array   $options	  Array of extra options
+	 * @param   object  &$response	Authentication response object
 	 *
 	 * @return  boolean
 	 */
@@ -84,7 +84,7 @@ class plgAuthenticationSpid extends JPlugin
 	{
 		JLog::add(new JLogEntry(__METHOD__, JLog::DEBUG, 'plg_authentication_spid'));
 
-		$app    = JFactory::getApplication();
+		$app	= JFactory::getApplication();
 		$input  = $app->input;
 		$method = $input->getMethod();
 
@@ -139,85 +139,140 @@ class plgAuthenticationSpid extends JPlugin
 				// Save the authentication source in the session.
 				JFactory::getSession()->set('spid.authsource', $authsource);
 			}
-			elseif ($this->params->get('allowUserRegistration', $uparams->get('allowUserRegistration')))
+			else
 			{
-				// user data
-				$data['name'] = $attributes['name'][0].' '.$attributes['familyName'][0];
-				$data['username'] = $username;
-				$data['email'] = $data['email1'] = $data['email2'] = JStringPunycode::emailToPunycode($attributes['email'][0]);
-				$data['password'] = $data['password1'] = $data['password2'] = JUserHelper::genRandomPassword();
-
-				// Get the model and validate the data.
-				jimport('joomla.application.component.model');
-				require_once JPATH_BASE . '/components/com_users/models/registration.php';
-				JModelLegacy::addIncludePath(__DIR__);
-				$model = JModelLegacy::getInstance('Registration', 'SpidModel');
-
-				$return = $model->register($data);
-
-				if ($return === false) {
-					$errors = $model->getErrors();
-					$response->status = JAuthentication::STATUS_FAILURE;
-
+				if ($allowEmailAuthentication = $this->params->get('allowEmailAuthentication', false))
+				{
 					// Get the database object and a new query object.
 					$db = JFactory::getDbo();
 					$query = $db->getQuery(true);
-
+	
 					// Build the query.
-					$query->select('COUNT(*)')
+					$query->select('username')
 						->from('#__users')
-						->where('email = ' . $db->q($data['email']));
-
+						->where('email = ' . $db->q(JStringPunycode::emailToPunycode($attributes['email'][0])));
+	
 					// Set and query the database.
 					$db->setQuery($query);
-					$duplicate = (bool) $db->loadResult();
+					$username = $db->loadResult();
+	
+					if ($username)
+					{
+						if ($allowEmailAuthentication == 2)
+						{
+							$query = $db->getQuery(true);
+							
+							// Build the query.
+							$query->update('#__users')
+								->set('username = ' . $db->q($attributes['fiscalNumber'][0]))
+								->where('email = ' . $db->q(JStringPunycode::emailToPunycode($attributes['email'][0])));
+							
+							// Set and query the database.
+							$db->setQuery($query);
+							
+							try
+							{
+								$db->execute();
+								$username = $attributes['fiscalNumber'][0];
+								$app->enqueueMessage(JText::sprintf('PLG_AUTHENTICATION_SPID_PROFILE_UPDATE_SUCCESS', $username), 'notice');
+							}
+							catch (Exception $e)
+							{
+							}
+						}
 
-					$response->message = ($duplicate ? JText::_('PLG_AUTHENTICATION_SPID_REGISTER_EMAIL1_MESSAGE') : 'USER NOT EXISTS AND FAILED THE CREATION PROCESS');
-
-					$login_url = JUri::getInstance();
-					$app->redirect($login_url, $response->message, 'error');
+						$response->status = JAuthentication::STATUS_SUCCESS;
+						$response->username = $username;
+						$response->email = JStringPunycode::emailToPunycode($attributes['email'][0]);
+						$response->fullname = $attributes['name'][0].' '.$attributes['familyName'][0];
+						
+						// Save the authentication source in the session.
+						JFactory::getSession()->set('spid.authsource', $authsource);
+						
+						return true;
+					}
 				}
 
-				$user = JUser::getInstance($username);
-				if (($user->block == 0) && (!$user->activation))
+				if ($this->params->get('allowUserRegistration', $uparams->get('allowUserRegistration')))
 				{
-					$session = JFactory::getSession();
-					$session->set('user', $user);
-
-					$response->status = JAuthentication::STATUS_SUCCESS;
-					$response->username = $username;
-					$response->email = $data['email'];
-					$response->fullname = $data['name'];
-					$response->password_clear = $data['password'];
-				}
-
-				// Flush the data from the session.
-				$app->setUserState('com_users.registration.data', null);
-
-				// Redirect to the profile screen.
-				JFactory::getLanguage()->load('com_users', JPATH_SITE);
-				if ($return === 'adminactivate')
-				{
-					$app->enqueueMessage(JText::_('PLG_AUTHENTICATION_SPID_REGISTRATION_COMPLETE_VERIFY'));
-					$app->redirect(JRoute::_('index.php?option=com_users&view=registration&layout=complete', false));
-				}
-				elseif ($return === 'useractivate')
-				{
-					$app->enqueueMessage(JText::_('COM_USERS_REGISTRATION_COMPLETE_ACTIVATE'));
-					$app->redirect(JRoute::_('index.php?option=com_users&view=registration&layout=complete', false));
+					// user data
+					$data['name'] = $attributes['name'][0].' '.$attributes['familyName'][0];
+					$data['username'] = $username;
+					$data['email'] = $data['email1'] = $data['email2'] = JStringPunycode::emailToPunycode($attributes['email'][0]);
+					$data['password'] = $data['password1'] = $data['password2'] = JUserHelper::genRandomPassword();
+	
+					// Get the model and validate the data.
+					jimport('joomla.application.component.model');
+					require_once JPATH_BASE . '/components/com_users/models/registration.php';
+					JModelLegacy::addIncludePath(__DIR__);
+					$model = JModelLegacy::getInstance('Registration', 'SpidModel');
+	
+					$return = $model->register($data);
+	
+					if ($return === false) {
+						$errors = $model->getErrors();
+						$response->status = JAuthentication::STATUS_FAILURE;
+	
+						// Get the database object and a new query object.
+						$db = JFactory::getDbo();
+						$query = $db->getQuery(true);
+	
+						// Build the query.
+						$query->select('COUNT(*)')
+							->from('#__users')
+							->where('email = ' . $db->q($data['email']));
+	
+						// Set and query the database.
+						$db->setQuery($query);
+						$duplicate = (bool) $db->loadResult();
+	
+						$response->message = ($duplicate ? JText::_('PLG_AUTHENTICATION_SPID_REGISTER_EMAIL1_MESSAGE') : 'USER NOT EXISTS AND FAILED THE CREATION PROCESS');
+	
+						$login_url = JUri::getInstance();
+						$app->redirect($login_url, $response->message, 'error');
+					}
+	
+					$user = JUser::getInstance($username);
+					if (($user->block == 0) && (!$user->activation))
+					{
+						$session = JFactory::getSession();
+						$session->set('user', $user);
+	
+						$response->status = JAuthentication::STATUS_SUCCESS;
+						$response->username = $username;
+						$response->email = $data['email'];
+						$response->fullname = $data['name'];
+						$response->password_clear = $data['password'];
+					}
+	
+					// Flush the data from the session.
+					$app->setUserState('com_users.registration.data', null);
+	
+					// Redirect to the profile screen.
+					JFactory::getLanguage()->load('com_users', JPATH_SITE);
+					if ($return === 'adminactivate')
+					{
+						$app->enqueueMessage(JText::_('PLG_AUTHENTICATION_SPID_REGISTRATION_COMPLETE_VERIFY'));
+						$app->redirect(JRoute::_('index.php?option=com_users&view=registration&layout=complete', false));
+					}
+					elseif ($return === 'useractivate')
+					{
+						$app->enqueueMessage(JText::_('COM_USERS_REGISTRATION_COMPLETE_ACTIVATE'));
+						$app->redirect(JRoute::_('index.php?option=com_users&view=registration&layout=complete', false));
+					}
+					else
+					{
+						$app->enqueueMessage(JText::_('COM_USERS_REGISTRATION_SAVE_SUCCESS'));
+						$app->redirect(JRoute::_('index.php?option=com_users&view=login', false));
+					}
 				}
 				else
 				{
-					$app->enqueueMessage(JText::_('COM_USERS_REGISTRATION_SAVE_SUCCESS'));
-					$app->redirect(JRoute::_('index.php?option=com_users&view=login', false));
+					// Invalid user
+					$response->status		= JAuthentication::STATUS_FAILURE;
+					$response->error_message = JText::_('JGLOBAL_AUTH_NO_USER');
+					JLog::add(new JLogEntry(JText::_('JGLOBAL_AUTH_NO_USER'), JLog::DEBUG, 'plg_authentication_spid'));
 				}
-			}
-			else
-			{
-				// Invalid user
-				$response->status        = JAuthentication::STATUS_FAILURE;
-				$response->error_message = JText::_('JGLOBAL_AUTH_NO_USER');
-				JLog::add(new JLogEntry(JText::_('JGLOBAL_AUTH_NO_USER'), JLog::DEBUG, 'plg_authentication_spid'));
 			}
 
 			return true;
