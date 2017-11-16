@@ -1,10 +1,7 @@
 <?php
 /**
- * @version		3.7.2 plugins/authentication/spid/registration.php
- *
  * @package		SPiD
  * @subpackage	plg_authentication_spid
- * @since		3.7
  *
  * @author		Helios Ciancio <info@eshiol.it>
  * @link		http://www.eshiol.it
@@ -21,7 +18,8 @@ defined('_JEXEC') or die;
 /**
  * Registration model class for Users.
  *
- * @since  3.7
+ * @version		3.8.0
+ * @since       3.7
  */
 class SpidModelRegistration extends UsersModelRegistration
 {
@@ -31,8 +29,6 @@ class SpidModelRegistration extends UsersModelRegistration
 	 * @param   array  $temp  The form data.
 	 *
 	 * @return  mixed  The user id on success, false on failure.
-	 *
-	 * @since   3.7
 	 */
 	public function register($temp)
 	{
@@ -361,4 +357,3 @@ class SpidModelRegistration extends UsersModelRegistration
 		}
 	}
 }
-		

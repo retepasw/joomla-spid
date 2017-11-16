@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.7" type="module" client="site" method="upgrade">
+<extension version="3.0" type="module" client="site" method="upgrade">
   <name>mod_spid_login</name>
   <author>Helios Ciancio</author>
-  <creationDate>October 2017</creationDate>
+  <creationDate>November 2017</creationDate>
   <copyright>(C) 2017 Helios Ciancio. All rights reserved.</copyright>
   <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
   <authorEmail>info@eshiol.it</authorEmail>
   <authorUrl>www.eshiol.it</authorUrl>
-  <version>3.7.5.43</version>
+  <version>3.8.0.45</version>
   <description>MOD_SPID_LOGIN_XML_DESCRIPTION</description>
   <updateservers>
-    <server type="module" priority="2" name="SPiD Login">https://www.eshiol.it/files/spid/mod_spid_login.xml</server>
+    <server type="extension" priority="2" name="SPiD Login">https://www.eshiol.it/files/spid/mod_spid_login.xml</server>
   </updateservers>
   <files>
     <filename module="mod_spid_login">mod_spid_login.php</filename>

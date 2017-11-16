@@ -16,7 +16,7 @@
 defined('_JEXEC') or die;
 
 /**
- * @version		3.7.3
+ * @version		3.8.0
  * @since		3.7
  */
 class plgUserSpid extends JPlugin
@@ -25,7 +25,6 @@ class plgUserSpid extends JPlugin
 	 * Load the language file on instantiation.
 	 *
 	 * @var    boolean
-	 * @since  3.7
 	 */
 	protected $autoloadLanguage = true;
 
@@ -33,7 +32,6 @@ class plgUserSpid extends JPlugin
 	 * Database object
 	 *
 	 * @var    JDatabaseDriver
-	 * @since  3.7
 	 */
 	protected $db;
 
@@ -42,7 +40,6 @@ class plgUserSpid extends JPlugin
 	 *
 	 * @param  object  $subject  The object to observe
 	 * @param  array   $config   An array that holds the plugin configuration
-	 * @since  3.7
 	 */
 	function __construct(&$subject, $config)
 	{
@@ -88,8 +85,6 @@ class plgUserSpid extends JPlugin
 	 * @param   array  $options  Array holding options (client, ...).
 	 *
 	 * @return  boolean  Always returns true.
-	 *
-	 * @since   3.7
 	 */
 	public function onUserLogout($user, $options = array())
 	{
