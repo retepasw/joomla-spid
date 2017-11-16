@@ -84,7 +84,7 @@ class plgAuthenticationSpid extends JPlugin
 	{
 		JLog::add(new JLogEntry(__METHOD__, JLog::DEBUG, 'plg_authentication_spid'));
 
-		$app	= JFactory::getApplication();
+		$app    = JFactory::getApplication();
 		$input  = $app->input;
 		$method = $input->getMethod();
 
@@ -113,23 +113,17 @@ class plgAuthenticationSpid extends JPlugin
 		{
 			JLog::add(new JLogEntry('User is authenticated', JLog::DEBUG, 'plg_authentication_spid'));
 			$attributes = $as->getAttributes();
+			if ($this->params->get('removeTINPrefix', true))
+			{
+				if( ($i = strpos($attributes['fiscalNumber'][0], '-')) !== FALSE )
+				{
+					$attributes['fiscalNumber'][0] = substr($attributes['fiscalNumber'][0], $i + 1);
+				}
+			}
 			$username = $attributes['fiscalNumber'][0];
 			$uparams = JComponentHelper::getParams('com_users');
 
 			if (JUser::getInstance($username)->id)
-			{
-				$response->status = JAuthentication::STATUS_SUCCESS;
-				$response->username = $username;
-				$response->email = JStringPunycode::emailToPunycode($attributes['email'][0]);
-				$response->fullname = $attributes['name'][0].' '.$attributes['familyName'][0];
-
-				// Save the authentication source in the session.
-				JFactory::getSession()->set('spid.authsource', $authsource);
-			}
-			elseif (strtoupper(substr($username, 0, 6)) !== "TINIT-")
-			{
-			}
-			elseif (JUser::getInstance($username = substr($username, 6))->id)
 			{
 				$response->status = JAuthentication::STATUS_SUCCESS;
 				$response->username = $username;
@@ -146,30 +140,30 @@ class plgAuthenticationSpid extends JPlugin
 					// Get the database object and a new query object.
 					$db = JFactory::getDbo();
 					$query = $db->getQuery(true);
-	
+
 					// Build the query.
 					$query->select('username')
 						->from('#__users')
 						->where('email = ' . $db->q(JStringPunycode::emailToPunycode($attributes['email'][0])));
-	
+
 					// Set and query the database.
 					$db->setQuery($query);
 					$username = $db->loadResult();
-	
+
 					if ($username)
 					{
 						if ($allowEmailAuthentication == 2)
 						{
 							$query = $db->getQuery(true);
-							
+
 							// Build the query.
 							$query->update('#__users')
 								->set('username = ' . $db->q($attributes['fiscalNumber'][0]))
 								->where('email = ' . $db->q(JStringPunycode::emailToPunycode($attributes['email'][0])));
-							
+
 							// Set and query the database.
 							$db->setQuery($query);
-							
+
 							try
 							{
 								$db->execute();
@@ -185,10 +179,10 @@ class plgAuthenticationSpid extends JPlugin
 						$response->username = $username;
 						$response->email = JStringPunycode::emailToPunycode($attributes['email'][0]);
 						$response->fullname = $attributes['name'][0].' '.$attributes['familyName'][0];
-						
+
 						// Save the authentication source in the session.
 						JFactory::getSession()->set('spid.authsource', $authsource);
-						
+
 						return true;
 					}
 				}
@@ -200,54 +194,54 @@ class plgAuthenticationSpid extends JPlugin
 					$data['username'] = $username;
 					$data['email'] = $data['email1'] = $data['email2'] = JStringPunycode::emailToPunycode($attributes['email'][0]);
 					$data['password'] = $data['password1'] = $data['password2'] = JUserHelper::genRandomPassword();
-	
+
 					// Get the model and validate the data.
 					jimport('joomla.application.component.model');
 					require_once JPATH_BASE . '/components/com_users/models/registration.php';
 					JModelLegacy::addIncludePath(__DIR__);
 					$model = JModelLegacy::getInstance('Registration', 'SpidModel');
-	
+
 					$return = $model->register($data);
-	
+
 					if ($return === false) {
 						$errors = $model->getErrors();
 						$response->status = JAuthentication::STATUS_FAILURE;
-	
+
 						// Get the database object and a new query object.
 						$db = JFactory::getDbo();
 						$query = $db->getQuery(true);
-	
+
 						// Build the query.
 						$query->select('COUNT(*)')
 							->from('#__users')
 							->where('email = ' . $db->q($data['email']));
-	
+
 						// Set and query the database.
 						$db->setQuery($query);
 						$duplicate = (bool) $db->loadResult();
-	
+
 						$response->message = ($duplicate ? JText::_('PLG_AUTHENTICATION_SPID_REGISTER_EMAIL1_MESSAGE') : 'USER NOT EXISTS AND FAILED THE CREATION PROCESS');
-	
+
 						$login_url = JUri::getInstance();
 						$app->redirect($login_url, $response->message, 'error');
 					}
-	
+
 					$user = JUser::getInstance($username);
 					if (($user->block == 0) && (!$user->activation))
 					{
 						$session = JFactory::getSession();
 						$session->set('user', $user);
-	
+
 						$response->status = JAuthentication::STATUS_SUCCESS;
 						$response->username = $username;
 						$response->email = $data['email'];
 						$response->fullname = $data['name'];
 						$response->password_clear = $data['password'];
 					}
-	
+
 					// Flush the data from the session.
 					$app->setUserState('com_users.registration.data', null);
-	
+
 					// Redirect to the profile screen.
 					JFactory::getLanguage()->load('com_users', JPATH_SITE);
 					if ($return === 'adminactivate')

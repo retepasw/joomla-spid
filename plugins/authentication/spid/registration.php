@@ -357,4 +357,3 @@ class SpidModelRegistration extends UsersModelRegistration
 		}
 	}
 }
-		
