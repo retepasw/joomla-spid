@@ -7,7 +7,7 @@
   <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
   <authorEmail>info@eshiol.it</authorEmail>
   <authorUrl>www.eshiol.it</authorUrl>
-  <version>3.8.0</version>
+  <version>3.8.0.45</version>
   <description>MOD_SPID_LOGIN_XML_DESCRIPTION</description>
   <updateservers>
     <server type="extension" priority="2" name="SPiD Login">https://www.eshiol.it/files/spid/mod_spid_login.xml</server>
