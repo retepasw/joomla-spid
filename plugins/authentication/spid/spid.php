@@ -16,7 +16,7 @@
 defined('_JEXEC') or die;
 
 /**
- * @version		3.8.0
+ * @version		3.8.1
  * @since		3.7
  */
 class plgAuthenticationSpid extends JPlugin
@@ -148,9 +148,9 @@ class plgAuthenticationSpid extends JPlugin
 
 					// Set and query the database.
 					$db->setQuery($query);
-					$username = $db->loadResult();
+					$username_new = $db->loadResult();
 
-					if ($username)
+					if ($username_new)
 					{
 						if ($allowEmailAuthentication == 2)
 						{
@@ -167,7 +167,7 @@ class plgAuthenticationSpid extends JPlugin
 							try
 							{
 								$db->execute();
-								$username = $attributes['fiscalNumber'][0];
+								$username_new = $attributes['fiscalNumber'][0];
 								$app->enqueueMessage(JText::sprintf('PLG_AUTHENTICATION_SPID_PROFILE_UPDATE_SUCCESS', $username), 'notice');
 							}
 							catch (Exception $e)
@@ -176,7 +176,7 @@ class plgAuthenticationSpid extends JPlugin
 						}
 
 						$response->status = JAuthentication::STATUS_SUCCESS;
-						$response->username = $username;
+						$response->username = $username_new;
 						$response->email = JStringPunycode::emailToPunycode($attributes['email'][0]);
 						$response->fullname = $attributes['name'][0].' '.$attributes['familyName'][0];
 
