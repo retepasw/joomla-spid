@@ -2,12 +2,12 @@
 <extension version="3.0" type="module" client="site" method="upgrade">
   <name>mod_spid_login</name>
   <author>Helios Ciancio</author>
-  <creationDate>November 2017</creationDate>
-  <copyright>(C) 2017 Helios Ciancio. All rights reserved.</copyright>
+  <creationDate>January 2018</creationDate>
+  <copyright>(C) 2017, 2018 Helios Ciancio. All rights reserved.</copyright>
   <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
   <authorEmail>info@eshiol.it</authorEmail>
   <authorUrl>www.eshiol.it</authorUrl>
-  <version>3.8.0.45</version>
+  <version>3.8.1.47</version>
   <description>MOD_SPID_LOGIN_XML_DESCRIPTION</description>
   <updateservers>
     <server type="extension" priority="2" name="SPiD Login">https://www.eshiol.it/files/spid/mod_spid_login.xml</server>
@@ -53,6 +53,9 @@
           <option value="0">JNO</option>
         </field>
         <field name="url_helplink" type="text" filter="url" label="MOD_SPID_LOGIN_FIELD_URL_HELPLINK_LABEL" description="MOD_SPID_LOGIN_FIELD_URL_HELPLINK_DESC" class="input-xxlarge input-large-text" hint="MOD_SPID_LOGIN_FIELD_URL_HELPLINK_DEFAULT" showon="show_helplink:1"/>
+        <field name="login" type="modal_menu" label="MOD_SPID_LOGIN_FIELD_LOGIN_REDIRECTURL_LABEL" description="MOD_SPID_LOGIN_FIELD_LOGIN_REDIRECTURL_DESC" disable="separator,alias,heading,url" select="true" new="true" edit="true" clear="true" addfieldpath="/administrator/components/com_menus/models/fields">
+          <option value="">JDEFAULT</option>
+        </field>
       </fieldset>
       <fieldset name="advanced">
         <field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC"/>
