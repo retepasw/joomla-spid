@@ -5,7 +5,7 @@
  *
  * @author		Helios Ciancio <info@eshiol.it>
  * @link		http://www.eshiol.it
- * @copyright	Copyright (C) 2017 Helios Ciancio. All Rights Reserved
+ * @copyright	Copyright (C) 2017, 2018 Helios Ciancio. All Rights Reserved
  * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3
  * SPiD for Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -80,6 +80,10 @@ JHtml::_('stylesheet', 'mod_spid_login/spid-sp-access-button.min.css', array(), 
 					$description = $id;
 				}
 				$id = str_replace('.', '', $id);
+				if (!file_exists(JPATH_BASE . '/media/mod_spid_login/img/spid-idp-' . $id . '.svg'))
+				{
+				    continue;
+				}
 				?>
 	            <li class="spid-idp-button-link" data-idp="<?php echo $id; ?>">
 	                <a href="#" onclick="document.getElementById('modspid-idp').value='<?php echo urlencode($data['entityid']); ?>';Joomla.submitform();return false;"><span class="spid-sr-only"><?php echo $description; ?></span><img src="media/mod_spid_login/img/spid-idp-<?php echo $id; ?>.svg" onerror="this.src='media/mod_spid_login/img/spid-idp-<?php echo $id; ?>.png'; this.onerror=null;" alt="<?php echo $description; ?>" /></a>
