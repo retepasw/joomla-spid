@@ -26,6 +26,7 @@ JLoader::register('UsersHelperRoute', JPATH_SITE . '/components/com_users/helper
 JHtml::_('jquery.framework');
 JHtml::_('script', 'mod_spid_login/spid-sp-access-button.min.js', false, true);
 JHtml::_('stylesheet', 'mod_spid_login/spid-sp-access-button.min.css', array(), true);
+JFactory::getDocument()->addScript(JURI::root(true).'/media/system/js/core.js');
 ?>
 
 <form action="<?php echo JRoute::_('index.php', true, $params->get('usesecure')); ?>" method="post" id="adminForm" class="form-inline">
