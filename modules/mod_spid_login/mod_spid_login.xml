@@ -9,11 +9,13 @@
   <authorUrl>www.eshiol.it</authorUrl>
   <version>3.8.2</version>
   <description>MOD_SPID_LOGIN_XML_DESCRIPTION</description>
+  <scriptfile>script.php</scriptfile>
   <updateservers>
     <server type="extension" priority="2" name="SPiD Login">https://www.eshiol.it/files/spid/mod_spid_login.xml</server>
   </updateservers>
   <files>
     <filename module="mod_spid_login">mod_spid_login.php</filename>
+    <filename>saml20-idp-remote.php</filename>
     <folder>fields</folder>
     <folder>tmpl</folder>
   </files>
