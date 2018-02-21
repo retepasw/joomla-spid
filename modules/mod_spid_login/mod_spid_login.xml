@@ -7,7 +7,7 @@
   <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
   <authorEmail>info@eshiol.it</authorEmail>
   <authorUrl>www.eshiol.it</authorUrl>
-  <version>3.8.2</version>
+  <version>3.8.3</version>
   <description>MOD_SPID_LOGIN_XML_DESCRIPTION</description>
   <scriptfile>script.php</scriptfile>
   <updateservers>
