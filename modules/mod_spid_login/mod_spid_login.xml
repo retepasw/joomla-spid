@@ -59,6 +59,40 @@
           <option value="">JDEFAULT</option>
         </field>
       </fieldset>
+      <fieldset name="idp" label="MOD_SPID_LOGIN_IDP">
+        <field name="show_arubaid" type="radio" description="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONARUBAID_DESC" label="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONARUBAID_LABEL" class="btn-group btn-group-yesno" default="1">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+        <field name="show_infocertid" type="radio" description="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONINFOCERTID_DESC" label="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONINFOCERTID_LABEL" class="btn-group btn-group-yesno" default="1">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+        <field name="show_intesaid" type="radio" description="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONINTESAID_DESC" label="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONINTESAID_LABEL" class="btn-group btn-group-yesno" default="1">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+        <field name="show_namirialid" type="radio" description="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONNAMIRIALID_DESC" label="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONNAMIRIALID_LABEL" class="btn-group btn-group-yesno" default="1">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+        <field name="show_posteid" type="radio" description="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONPOSTEID_DESC" label="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONPOSTEID_LABEL" class="btn-group btn-group-yesno" default="1">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+        <field name="show_sielteid" type="radio" description="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONSIELTEID_DESC" label="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONSIELTEID_LABEL" class="btn-group btn-group-yesno" default="1">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+        <field name="show_spiditalia" type="radio" description="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONSPIDITALIA_DESC" label="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONSPIDITALIA_LABEL" class="btn-group btn-group-yesno" default="1">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+        <field name="show_timid" type="radio" description="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONTIMID_DESC" label="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONTIMID_LABEL" class="btn-group btn-group-yesno" default="1">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+      </fieldset>
       <fieldset name="advanced">
         <field name="layout" type="modulelayout" label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC"/>
         <field name="moduleclass_sfx" type="textarea" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" rows="3"/>

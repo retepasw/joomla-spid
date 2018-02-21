@@ -52,44 +52,28 @@ JHtml::_('stylesheet', 'mod_spid_login/spid-sp-access-button.min.css', array(), 
 			<span class="italia-it-button-icon"><img src="media/mod_spid_login/img/spid-ico-circle-bb.svg" onerror="this.src='media/mod_spid_login/img/spid-ico-circle-bb.png'; this.onerror=null;" alt="" /></span>
 			<span class="italia-it-button-text"><?php echo JText::_('MOD_SPID_LOGIN_LOGIN'); ?></span>
 		</a>
+
 		<div id="spid-idp-button-<?php echo $button; ?>-get" class="spid-idp-button spid-idp-button-tip spid-idp-button-relative">
 			<ul id="spid-idp-list-<?php echo $button; ?>-root-get" class="spid-idp-button-menu" aria-labelledby="spid-idp">
-				<?php foreach ($metadata as $data): 
-				$parse = parse_url($data['entityid']);
-				if (isset($parse['host']))
-				{
-					$id = $parse['host'];
-				}
-				else
-				{
-					$id = $parse['path'];
-				}
-				if (!isset($data['description']))
-				{
-					$description = $id;
-				}
-				elseif(isset($data['description']['it']))
-				{
-					$description = $data['description']['it'];
-				}
-				elseif(isset($data['description']['en']))
-				{
-					$description = $data['description']['en'];
-				}
-				else
-				{
-					$description = $id;
-				}
-				$id = str_replace('.', '', $id);
-				if (!file_exists(JPATH_BASE . '/media/mod_spid_login/img/spid-idp-' . $id . '.svg'))
-				{
-				    continue;
-				}
-				?>
-	            <li class="spid-idp-button-link" data-idp="<?php echo $id; ?>">
-	                <a href="#" onclick="document.getElementById('modspid-idp').value='<?php echo urlencode($data['entityid']); ?>';Joomla.submitform();return false;"><span class="spid-sr-only"><?php echo $description; ?></span><img src="media/mod_spid_login/img/spid-idp-<?php echo $id; ?>.svg" onerror="this.src='media/mod_spid_login/img/spid-idp-<?php echo $id; ?>.png'; this.onerror=null;" alt="<?php echo $description; ?>" /></a>
+
+				<?php $idps = array(
+					'arubaid' => 'https://loginspid.aruba.it',
+					'infocertid' => 'https://identity.infocert.it',
+					'intesaid' => 'https://spid.intesa.it',
+					'namirialid' => 'https://idp.namirialtsp.com/idp',
+					'posteid' => 'https://posteid.poste.it',
+					'sielteid' => 'https://identity.sieltecloud.it',
+					'spiditalia' => 'https://spid.register.it',
+					'timid' => 'https://login.id.tim.it/affwebservices/public/saml2sso'
+					); ?>
+				<?php foreach ($idps as $idp => $entityid) : ?>
+					<?php if ($params->get('show_' . $idp, 1)) : ?>
+	            <li class="spid-idp-button-link" data-idp="<?php echo $idp; ?>">
+	                <a href="#" onclick="document.getElementById('modspid-idp').value='<?php echo urlencode($entityid); ?>';Joomla.submitform();return false;"><span class="spid-sr-only"><?php echo $description; ?></span><img src="media/mod_spid_login/img/spid-idp-<?php echo $idp; ?>.svg" onerror="this.src='media/mod_spid_login/img/spid-idp-<?php echo $idp; ?>.png'; this.onerror=null;" alt="<?php echo $description; ?>" /></a>
 	            </li>
+		 			<?php endif; ?>
 	 			<?php endforeach; ?>
+
 				<?php if ($params->get('show_infolink', true)) : ?>
 				<li class="spid-idp-support-link" data-spidlink="info">
 					<a href="<?php echo $params->get('url_infolink', JText::_('MOD_SPID_LOGIN_FIELD_URL_INFOLINK_DEFAULT')); ?>"><?php echo JText::_('MOD_SPID_LOGIN_INFOLINK'); ?></a>
