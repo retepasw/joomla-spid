@@ -16,7 +16,7 @@
 defined('_JEXEC') or die;
 
 /**
- * @version		3.8.1
+ * @version		3.8.2
  * @since		3.7
  */
 class plgAuthenticationSpid extends JPlugin
@@ -83,6 +83,8 @@ class plgAuthenticationSpid extends JPlugin
 	public function onUserAuthenticate($credentials, $options, &$response)
 	{
 		JLog::add(new JLogEntry(__METHOD__, JLog::DEBUG, 'plg_authentication_spid'));
+
+		if (!class_exists('SimpleSAML')) return true;
 
 		$app    = JFactory::getApplication();
 		$input  = $app->input;
