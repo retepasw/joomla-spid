@@ -16,7 +16,7 @@
 defined('_JEXEC') or die;
 
 /**
- * @version		3.8.1
+ * @version		3.8.0
  * @since		3.7
  */
 class plgUserSpid extends JPlugin
@@ -89,8 +89,6 @@ class plgUserSpid extends JPlugin
 	public function onUserLogout($user, $options = array())
 	{
 		JLog::add(new JLogEntry(__METHOD__, JLog::DEBUG, 'plg_user_spid'));
-
-		if (!class_exists('SimpleSAML')) return true;
 
 		// Load the authentication source from the session.
 		$authsource = JFactory::getSession()->get('spid.authsource', 'default-sp');
