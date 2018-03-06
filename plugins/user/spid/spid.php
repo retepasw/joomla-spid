@@ -5,7 +5,7 @@
  *
  * @author		Helios Ciancio <info@eshiol.it>
  * @link		http://www.eshiol.it
- * @copyright	Copyright (C) 2017 Helios Ciancio. All Rights Reserved
+ * @copyright	Copyright (C) 2017, 2018 Helios Ciancio. All Rights Reserved
  * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3
  * SPiD for Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -16,7 +16,7 @@
 defined('_JEXEC') or die;
 
 /**
- * @version		3.8.0
+ * @version		3.8.3
  * @since		3.7
  */
 class plgUserSpid extends JPlugin
@@ -90,13 +90,15 @@ class plgUserSpid extends JPlugin
 	{
 		JLog::add(new JLogEntry(__METHOD__, JLog::DEBUG, 'plg_user_spid'));
 
+		if (!class_exists('\SimpleSAML_Auth_Simple')) return true;
+
 		// Load the authentication source from the session.
 		$authsource = JFactory::getSession()->get('spid.authsource', 'default-sp');
 
 		$as = new SimpleSAML_Auth_Simple($authsource);
 		if ($as->isAuthenticated())
 		{
-		    $as->logout();
+			$as->logout();
 		}
 
 		return true;
