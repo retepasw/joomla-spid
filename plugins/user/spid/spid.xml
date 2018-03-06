@@ -2,12 +2,12 @@
 <extension version="3.0" type="plugin" group="user" method="upgrade">
   <name>plg_user_spid</name>
   <author>Helios Ciancio</author>
-  <creationDate>February 2018</creationDate>
+  <creationDate>March 2017</creationDate>
   <copyright>(C) 2017, 2018 Helios Ciancio. All rights reserved.</copyright>
   <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
   <authorEmail>info@eshiol.it</authorEmail>
   <authorUrl>www.eshiol.it</authorUrl>
-  <version>3.8.1</version>
+  <version>3.8.3</version>
   <description>PLG_USER_SPID_XML_DESCRIPTION</description>
   <updateservers>
     <server type="extension" priority="2" name="User - SPiD">https://www.eshiol.it/files/spid/plg_user_spid.xml</server>

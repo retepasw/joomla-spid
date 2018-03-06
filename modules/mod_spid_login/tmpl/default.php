@@ -17,7 +17,7 @@
 defined('_JEXEC') or die;
 
 /**
- * @version		3.8.0
+ * @version		3.8.4
  * @since		3.7
  */
 
@@ -40,6 +40,7 @@ JHtml::_('stylesheet', 'mod_spid_login/spid-sp-access-button.min.css', array(), 
 			<div class="controls">
 				<input id="modspid-idp" type="hidden" name="modspid-idp" />
 				<input id="modspid-authsource" type="hidden" name="modspid-authsource" value="<?php echo $params->get('authsource', 'default-sp'); ?>" />
+				<input id="modspid-loa" type="hidden" name="modspid-loa"  value="<?php echo $params->get('loa', 'SpidL1'); ?>" />
 			</div>
 		</div>
 
@@ -57,16 +58,34 @@ JHtml::_('stylesheet', 'mod_spid_login/spid-sp-access-button.min.css', array(), 
 			<ul id="spid-idp-list-<?php echo $button; ?>-root-get" class="spid-idp-button-menu" aria-labelledby="spid-idp">
 
 				<?php $idps = array(
-					'arubaid' => 'https://loginspid.aruba.it',
+					'arubaid' => 	'https://loginspid.aruba.it',
 					'infocertid' => 'https://identity.infocert.it',
-					'intesaid' => 'https://spid.intesa.it',
+					'intesaid' => 	'https://spid.intesa.it',
 					'namirialid' => 'https://idp.namirialtsp.com/idp',
-					'posteid' => 'https://posteid.poste.it',
-					'sielteid' => 'https://identity.sieltecloud.it',
+					'posteid' => 	'https://posteid.poste.it',
+					'sielteid' => 	'https://identity.sieltecloud.it',
 					'spiditalia' => 'https://spid.register.it',
-					'timid' => 'https://login.id.tim.it/affwebservices/public/saml2sso'
+					'timid' => 		'https://login.id.tim.it/affwebservices/public/saml2sso'
 					); ?>
 				<?php foreach ($idps as $idp => $entityid) : ?>
+				<?php 
+				if (!isset($metadata[$entityid]['description']))
+				{
+					$description = $id;
+				}
+				elseif(isset($metadata[$entityid]['description']['it']))
+				{
+					$description = $metadata[$entityid]['description']['it'];
+				}
+				elseif(isset($metadata[$entityid]['description']['en']))
+				{
+					$description = $metadata[$entityid]['description']['en'];
+				}
+				else
+				{
+					$description = $entityid;
+				}
+				?>
 					<?php if ($params->get('show_' . $idp, 1)) : ?>
 	            <li class="spid-idp-button-link" data-idp="<?php echo $idp; ?>">
 	                <a href="#" onclick="document.getElementById('modspid-idp').value='<?php echo urlencode($entityid); ?>';Joomla.submitform();return false;"><span class="spid-sr-only"><?php echo $description; ?></span><img src="media/mod_spid_login/img/spid-idp-<?php echo $idp; ?>.svg" onerror="this.src='media/mod_spid_login/img/spid-idp-<?php echo $idp; ?>.png'; this.onerror=null;" alt="<?php echo $description; ?>" /></a>

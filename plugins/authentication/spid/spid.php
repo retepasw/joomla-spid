@@ -5,7 +5,7 @@
  *
  * @author		Helios Ciancio <info@eshiol.it>
  * @link		http://www.eshiol.it
- * @copyright	Copyright (C) 2017 Helios Ciancio. All Rights Reserved
+ * @copyright	Copyright (C) 2017, 2018 Helios Ciancio. All Rights Reserved
  * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3
  * SPiD for Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -16,7 +16,7 @@
 defined('_JEXEC') or die;
 
 /**
- * @version		3.8.1
+ * @version		3.8.2
  * @since		3.7
  */
 class plgAuthenticationSpid extends JPlugin
@@ -84,6 +84,8 @@ class plgAuthenticationSpid extends JPlugin
 	{
 		JLog::add(new JLogEntry(__METHOD__, JLog::DEBUG, 'plg_authentication_spid'));
 
+		if (!class_exists('\SimpleSAML_Auth_Simple')) return true;
+
 		$app    = JFactory::getApplication();
 		$input  = $app->input;
 		$method = $input->getMethod();
@@ -101,11 +103,13 @@ class plgAuthenticationSpid extends JPlugin
 
 		$authsource = $input->$method->get('modspid-authsource', 'default-sp', 'RAW');
 		// Require the user to be authenticated.
-		/**
-		$options['saml:AuthnContextClassRef'] = 'https://www.spid.gov.it/SpidL1';
-		$options['samlp:RequestedAuthnContext'] = array("Comparison" => "minimum");
-		*/
 		$options['ErrorURL'] = JUri::root();
+		$options['saml:AuthnContextClassRef'] = 'https://www.spid.gov.it/' . $input->$method->get('modspid-loa', 'SpidL1', 'RAW');
+
+		JLog::add(new JLogEntry('Authenticating...', JLog::DEBUG, 'plg_authentication_spid'));
+		JLog::add(new JLogEntry($authsource, JLog::DEBUG, 'plg_authentication_spid'));
+		JLog::add(new JLogEntry(print_r($options, true), JLog::DEBUG, 'plg_authentication_spid'));
+
 		$as = new SimpleSAML_Auth_Simple($authsource);
 		$as->requireAuth($options);
 
@@ -113,6 +117,7 @@ class plgAuthenticationSpid extends JPlugin
 		{
 			JLog::add(new JLogEntry('User is authenticated', JLog::DEBUG, 'plg_authentication_spid'));
 			$attributes = $as->getAttributes();
+			JLog::add(new JLogEntry(print_r($as, true), JLog::DEBUG, 'plg_authentication_spid'));
 			if ($this->params->get('removeTINPrefix', true))
 			{
 				if( ($i = strpos($attributes['fiscalNumber'][0], '-')) !== FALSE )
@@ -129,6 +134,7 @@ class plgAuthenticationSpid extends JPlugin
 				$response->username = $username;
 				$response->email = JStringPunycode::emailToPunycode($attributes['email'][0]);
 				$response->fullname = $attributes['name'][0].' '.$attributes['familyName'][0];
+				$response->loa = $input->$method->get('modspid-loa', 'SpidL1', 'RAW');
 
 				// Save the authentication source in the session.
 				JFactory::getSession()->set('spid.authsource', $authsource);
@@ -179,6 +185,7 @@ class plgAuthenticationSpid extends JPlugin
 						$response->username = $username_new;
 						$response->email = JStringPunycode::emailToPunycode($attributes['email'][0]);
 						$response->fullname = $attributes['name'][0].' '.$attributes['familyName'][0];
+						$response->loa = $input->$method->get('modspid-loa', 'SpidL1', 'RAW');
 
 						// Save the authentication source in the session.
 						JFactory::getSession()->set('spid.authsource', $authsource);

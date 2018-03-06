@@ -16,7 +16,7 @@
 defined('_JEXEC') or die;
 
 /**
- * @version		3.8.1
+ * @version		3.8.3
  * @since		3.7
  */
 class plgUserSpid extends JPlugin
@@ -27,14 +27,14 @@ class plgUserSpid extends JPlugin
 	 * @var    boolean
 	 */
 	protected $autoloadLanguage = true;
-	
+
 	/**
 	 * Database object
 	 *
 	 * @var    JDatabaseDriver
 	 */
 	protected $db;
-	
+
 	/**
 	 * Constructor
 	 *
@@ -44,7 +44,7 @@ class plgUserSpid extends JPlugin
 	function __construct(&$subject, $config)
 	{
 		parent::__construct($subject, $config);
-		
+
 		if ($this->params->get('debug') || defined('JDEBUG') && JDEBUG)
 		{
 			JLog::addLogger(array('text_file' => $this->params->get('log', 'eshiol.log.php'), 'extension' => 'plg_user_spid_file'), JLog::ALL, array('plg_user_spid'));
@@ -55,7 +55,7 @@ class plgUserSpid extends JPlugin
 			JLog::addLogger(array('logger' => 'phpconsole', 'extension' => 'plg_user_spid_phpconsole'),  JLOG::DEBUG, array('plg_user_spid'));
 		}
 		JLog::add(new JLogEntry(__METHOD__, JLog::DEBUG, 'plg_user_spid'));
-		
+
 		// Use Composers autoloading
 		if (!class_exists('SimpleSAML'))
 		{
@@ -77,7 +77,7 @@ class plgUserSpid extends JPlugin
 			}
 		}
 	}
-	
+
 	/**
 	 * Method to handle any logout logic and report back to the subject.
 	 *
@@ -89,18 +89,18 @@ class plgUserSpid extends JPlugin
 	public function onUserLogout($user, $options = array())
 	{
 		JLog::add(new JLogEntry(__METHOD__, JLog::DEBUG, 'plg_user_spid'));
-		
-		if (!class_exists('SimpleSAML')) return true;
-		
+
+		if (!class_exists('\SimpleSAML_Auth_Simple')) return true;
+
 		// Load the authentication source from the session.
 		$authsource = JFactory::getSession()->get('spid.authsource', 'default-sp');
-		
+
 		$as = new SimpleSAML_Auth_Simple($authsource);
 		if ($as->isAuthenticated())
 		{
 			$as->logout();
 		}
-		
+
 		return true;
 	}
 }
