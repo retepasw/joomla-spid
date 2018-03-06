@@ -2,12 +2,12 @@
 <extension version="3.0" type="module" client="site" method="upgrade">
   <name>mod_spid_login</name>
   <author>Helios Ciancio</author>
-  <creationDate>February 2018</creationDate>
+  <creationDate>March 2018</creationDate>
   <copyright>(C) 2017, 2018 Helios Ciancio. All rights reserved.</copyright>
   <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
   <authorEmail>info@eshiol.it</authorEmail>
   <authorUrl>www.eshiol.it</authorUrl>
-  <version>3.8.3</version>
+  <version>3.8.4</version>
   <description>MOD_SPID_LOGIN_XML_DESCRIPTION</description>
   <scriptfile>script.php</scriptfile>
   <updateservers>
@@ -34,6 +34,11 @@
     <fields name="params">
       <fieldset name="basic" addfieldpath="/modules/mod_spid_login/fields">
         <field name="authsource" type="authsource" label="MOD_SPID_LOGIN_AUTHSOURCE_LABEL" description="MOD_SPID_LOGIN_AUTHSOURCE_LABEL" default="default-sp"/>
+        <field name="loa" type="list" label="MOD_SPID_LOGIN_FIELD_LOA_LABEL" description="MOD_SPID_LOGIN_FIELD_LOA_DESC" default="SpidL1">
+          <option value="SpidL1">MOD_SPID_LOGIN_LOA_SPIDL1</option>
+          <option value="SpidL2">MOD_SPID_LOGIN_LOA_SPIDL2</option>
+          <option value="SpidL3">MOD_SPID_LOGIN_LOA_SPIDL3</option>
+        </field>
         <field name="size" type="list" label="MOD_SPID_LOGIN_SIZE_LABEL" description="MOD_SPID_LOGIN_SIZE_LABEL" default="m">
           <option value="s">MOD_SPID_LOGIN_SMALL</option>
           <option value="m">MOD_SPID_LOGIN_MEDIUM</option>
