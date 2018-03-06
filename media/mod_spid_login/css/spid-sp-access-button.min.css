@@ -122,20 +122,20 @@ svg {
     margin: 0
 }
 
-#spid-idp-button-small-get,
-#spid-idp-button-medium-get,
-#spid-idp-button-small-post,
-#spid-idp-button-medium-post {
+.spid-idp-button-small-get,
+.spid-idp-button-medium-get,
+.spid-idp-button-small-post,
+.spid-idp-button-medium-post {
     width: 230px
 }
 
-#spid-idp-button-large-get,
-#spid-idp-button-large-post {
+.spid-idp-button-large-get,
+.spid-idp-button-large-post {
     width: 270px
 }
 
-#spid-idp-button-xlarge-get,
-#spid-idp-button-xlarge-post {
+.spid-idp-button-xlarge-get,
+.spid-idp-button-xlarge-post {
     width: 330px
 }
 

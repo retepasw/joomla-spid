@@ -27,35 +27,37 @@ JHtml::_('behavior.framework');
 JHtml::_('jquery.framework');
 JHtml::_('script', 'mod_spid_login/spid-sp-access-button.min.js', false, true);
 JHtml::_('stylesheet', 'mod_spid_login/spid-sp-access-button.min.css', array(), true);
+
+$mod_spid_login = 'mod-spid-login-' . $module->id;
 ?>
 
-<form action="<?php echo JRoute::_('index.php', true, $params->get('usesecure')); ?>" method="post" id="adminForm" class="form-inline">
+<form action="<?php echo JRoute::_('index.php', true, $params->get('usesecure')); ?>" method="post" id="<?php echo $mod_spid_login; ?>-form" class="form-inline">
 	<?php if ($params->get('pretext')) : ?>
 		<div class="pretext">
 			<p><?php echo $params->get('pretext'); ?></p>
 		</div>
 	<?php endif; ?>
 	<div class="spidlogin<?php echo $moduleclass_sfx; ?>">
-		<div id="form-login-idp" class="control-group">
+		<div class="control-group">
 			<div class="controls">
-				<input id="modspid-idp" type="hidden" name="modspid-idp" />
-				<input id="modspid-authsource" type="hidden" name="modspid-authsource" value="<?php echo $params->get('authsource', 'default-sp'); ?>" />
-				<input id="modspid-loa" type="hidden" name="modspid-loa"  value="<?php echo $params->get('loa', 'SpidL1'); ?>" />
+				<input type="hidden" name="modspid-idp" id="<?php echo $mod_spid_login; ?>-idp" />
+				<input type="hidden" name="modspid-authsource" value="<?php echo $params->get('authsource', 'default-sp'); ?>" />
+				<input type="hidden" name="modspid-loa" value="<?php echo $params->get('loa', 'SpidL1'); ?>" />
 			</div>
 		</div>
 
-	<?php 
+	<?php
 		$buttons = ['s' => 'small', 'm' => 'medium', 'l' => 'large', 'xl' => 'xlarge']; 
 		$size = $params->get('size', 'm');
 		$button = $buttons[$size];
 	?>
-		<a href="#" class="italia-it-button italia-it-button-size-<?php echo $size; ?> button-spid" spid-idp-button="#spid-idp-button-<?php echo $button; ?>-get" aria-haspopup="true" aria-expanded="false">
+		<a href="#" class="italia-it-button italia-it-button-size-<?php echo $size; ?> button-spid" spid-idp-button="#<?php echo $mod_spid_login; ?>-get" aria-haspopup="true" aria-expanded="false">
 			<span class="italia-it-button-icon"><img src="media/mod_spid_login/img/spid-ico-circle-bb.svg" onerror="this.src='media/mod_spid_login/img/spid-ico-circle-bb.png'; this.onerror=null;" alt="" /></span>
 			<span class="italia-it-button-text"><?php echo JText::_('MOD_SPID_LOGIN_LOGIN'); ?></span>
 		</a>
 
-		<div id="spid-idp-button-<?php echo $button; ?>-get" class="spid-idp-button spid-idp-button-tip spid-idp-button-relative">
-			<ul id="spid-idp-list-<?php echo $button; ?>-root-get" class="spid-idp-button-menu" aria-labelledby="spid-idp">
+		<div id="<?php echo $mod_spid_login; ?>-get" class="spid-idp-button spid-idp-button-tip spid-idp-button-relative spid-idp-button-<?php echo $button ?>-get">
+			<ul id="<?php echo $mod_spid_login; ?>-root-get" class="spid-idp-button-menu" aria-labelledby="spid-idp">
 
 				<?php $idps = array(
 					'arubaid' => 	'https://loginspid.aruba.it',
@@ -88,7 +90,7 @@ JHtml::_('stylesheet', 'mod_spid_login/spid-sp-access-button.min.css', array(), 
 				?>
 					<?php if ($params->get('show_' . $idp, 1)) : ?>
 	            <li class="spid-idp-button-link" data-idp="<?php echo $idp; ?>">
-	                <a href="#" onclick="document.getElementById('modspid-idp').value='<?php echo urlencode($entityid); ?>';Joomla.submitform();return false;"><span class="spid-sr-only"><?php echo $description; ?></span><img src="media/mod_spid_login/img/spid-idp-<?php echo $idp; ?>.svg" onerror="this.src='media/mod_spid_login/img/spid-idp-<?php echo $idp; ?>.png'; this.onerror=null;" alt="<?php echo $description; ?>" /></a>
+	                <a href="#" onclick="document.getElementById('<?php echo $mod_spid_login; ?>-idp').value='<?php echo urlencode($entityid); ?>';Joomla.submitform(null, document.getElementById('<?php echo $mod_spid_login; ?>-form'));return false;"><span class="spid-sr-only"><?php echo $description; ?></span><img src="media/mod_spid_login/img/spid-idp-<?php echo $idp; ?>.svg" onerror="this.src='media/mod_spid_login/img/spid-idp-<?php echo $idp; ?>.png'; this.onerror=null;" alt="<?php echo $description; ?>" /></a>
 	            </li>
 		 			<?php endif; ?>
 	 			<?php endforeach; ?>
@@ -127,7 +129,7 @@ JHtml::_('stylesheet', 'mod_spid_login/spid-sp-access-button.min.css', array(), 
 JFactory::getDocument()->addScriptDeclaration("
 	(function ($){
 		$(document).ready(function (){
-            var rootList = $('#spid-idp-list-".$button."-root-get');
+            var rootList = $('#" . $mod_spid_login . "-root-get');
             var idpList = rootList.children('.spid-idp-button-link');
             var lnkList = rootList.children('.spid-idp-support-link');
             while (idpList.length) {
