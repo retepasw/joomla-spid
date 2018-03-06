@@ -2,7 +2,7 @@
 <extension version="3.0" type="plugin" group="user" method="upgrade">
   <name>plg_user_spid</name>
   <author>Helios Ciancio</author>
-  <creationDate>March 2017</creationDate>
+  <creationDate>March 2018</creationDate>
   <copyright>(C) 2017, 2018 Helios Ciancio. All rights reserved.</copyright>
   <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
   <authorEmail>info@eshiol.it</authorEmail>
