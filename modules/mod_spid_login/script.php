@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
 
 /**
  * Script file of SPiD module
- * 
+ *
  * @version		3.8.0
  */
 class mod_spid_loginInstallerScript

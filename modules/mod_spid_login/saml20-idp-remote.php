@@ -5,7 +5,7 @@
  *
  * Remember to remove the IdPs you don't use from this file.
  *
- * See: https://simplesamlphp.org/docs/stable/simplesamlphp-reference-idp-remote 
+ * See: https://simplesamlphp.org/docs/stable/simplesamlphp-reference-idp-remote
  */
 
 /*INFOCERT*/
@@ -14,91 +14,91 @@
 
 $metadata['https://identity.infocert.it'] = array (
   'entityid' => 'https://identity.infocert.it',
-  'description' => 
+  'description' =>
   array (
     'it' => 'InfoCert S.p.A.',
     'en' => 'InfoCert S.p.A.',
     'fr' => 'InfoCert S.p.A.',
     'de' => 'InfoCert S.p.A.',
   ),
-  'OrganizationName' => 
+  'OrganizationName' =>
   array (
     'it' => 'InfoCert S.p.A.',
     'en' => 'InfoCert S.p.A.',
     'fr' => 'InfoCert S.p.A.',
     'de' => 'InfoCert S.p.A.',
   ),
-  'name' => 
+  'name' =>
   array (
     'it' => 'InfoCert S.p.A.',
     'en' => 'InfoCert S.p.A.',
     'fr' => 'InfoCert S.p.A.',
     'de' => 'InfoCert S.p.A.',
   ),
-  'OrganizationDisplayName' => 
+  'OrganizationDisplayName' =>
   array (
     'it' => 'InfoCert S.p.A.',
     'en' => 'InfoCert S.p.A.',
     'fr' => 'InfoCert S.p.A.',
     'de' => 'InfoCert S.p.A.',
   ),
-  'url' => 
+  'url' =>
   array (
     'it' => 'https://www.infocert.it',
     'en' => 'https://www.infocert.it/international/?lang=en',
     'fr' => 'https://www.infocert.it/international/?lang=fr',
     'de' => 'https://www.infocert.it/international/?lang=de',
   ),
-  'OrganizationURL' => 
+  'OrganizationURL' =>
   array (
     'it' => 'https://www.infocert.it',
     'en' => 'https://www.infocert.it/international/?lang=en',
     'fr' => 'https://www.infocert.it/international/?lang=fr',
     'de' => 'https://www.infocert.it/international/?lang=de',
   ),
-  'contacts' => 
+  'contacts' =>
   array (
   ),
   'metadata-set' => 'saml20-idp-remote',
   'sign.authnrequest' => true,
-  'SingleSignOnService' => 
+  'SingleSignOnService' =>
   array (
-    0 => 
+    0 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
       'Location' => 'https://identity.infocert.it/spid/samlsso',
     ),
-    1 => 
+    1 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
       'Location' => 'https://identity.infocert.it/spid/samlsso',
     ),
   ),
-  'SingleLogoutService' => 
+  'SingleLogoutService' =>
   array (
-    0 => 
+    0 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
       'Location' => 'https://identity.infocert.it/spid/samlslo',
       'ResponseLocation' => 'https://identity.infocert.it/spid/samlslo/response',
     ),
-    1 => 
+    1 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
       'Location' => 'https://identity.infocert.it/spid/samlslo',
       'ResponseLocation' => 'https://identity.infocert.it/spid/samlslo/response',
     ),
   ),
-  'ArtifactResolutionService' => 
+  'ArtifactResolutionService' =>
   array (
   ),
-  'NameIDFormats' => 
+  'NameIDFormats' =>
   array (
     0 => 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
   ),
-  'keys' => 
+  'keys' =>
   array (
-    0 => 
+    0 =>
     array (
       'encryption' => false,
       'signing' => true,
@@ -118,71 +118,71 @@ $metadata['https://identity.infocert.it'] = array (
 
 $metadata['https://login.id.tim.it/affwebservices/public/saml2sso'] = array (
   'entityid' => 'https://login.id.tim.it/affwebservices/public/saml2sso',
-  'description' => 
+  'description' =>
   array (
     'en' => 'TI Trust Technologies srl',
   ),
-  'OrganizationName' => 
+  'OrganizationName' =>
   array (
     'en' => 'TI Trust Technologies srl',
   ),
-  'name' => 
+  'name' =>
   array (
     'en' => 'Trust Technologies srl',
   ),
-  'OrganizationDisplayName' => 
+  'OrganizationDisplayName' =>
   array (
     'en' => 'Trust Technologies srl',
   ),
-  'url' => 
+  'url' =>
   array (
     'en' => 'https://www.trusttechnologies.it',
   ),
-  'OrganizationURL' => 
+  'OrganizationURL' =>
   array (
     'en' => 'https://www.trusttechnologies.it',
   ),
-  'contacts' => 
+  'contacts' =>
   array (
   ),
   'metadata-set' => 'saml20-idp-remote',
   'sign.authnrequest' => true,
-  'SingleSignOnService' => 
+  'SingleSignOnService' =>
   array (
-    0 => 
+    0 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
       'Location' => 'https://login.id.tim.it/affwebservices/public/saml2sso',
     ),
-    1 => 
+    1 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
       'Location' => 'https://login.id.tim.it/affwebservices/public/saml2sso',
     ),
   ),
-  'SingleLogoutService' => 
+  'SingleLogoutService' =>
   array (
-    0 => 
+    0 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
       'Location' => 'https://login.id.tim.it/affwebservices/public/saml2slo',
     ),
-    1 => 
+    1 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
       'Location' => 'https://login.id.tim.it/affwebservices/public/saml2slo',
     ),
   ),
-  'ArtifactResolutionService' => 
+  'ArtifactResolutionService' =>
   array (
   ),
-  'NameIDFormats' => 
+  'NameIDFormats' =>
   array (
     0 => 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
   ),
-  'keys' => 
+  'keys' =>
   array (
-    0 => 
+    0 =>
     array (
       'encryption' => false,
       'signing' => true,
@@ -197,73 +197,73 @@ $metadata['https://login.id.tim.it/affwebservices/public/saml2sso'] = array (
 
 $metadata['https://posteid.poste.it'] = array (
   'entityid' => 'https://posteid.poste.it',
-  'description' => 
+  'description' =>
   array (
     'it' => 'Poste Italiane SpA',
   ),
-  'OrganizationName' => 
+  'OrganizationName' =>
   array (
     'it' => 'Poste Italiane SpA',
   ),
-  'name' => 
+  'name' =>
   array (
     'it' => 'Poste Italiane SpA',
   ),
-  'OrganizationDisplayName' => 
+  'OrganizationDisplayName' =>
   array (
     'it' => 'Poste Italiane SpA',
   ),
-  'url' => 
+  'url' =>
   array (
     'it' => 'https://www.poste.it',
   ),
-  'OrganizationURL' => 
+  'OrganizationURL' =>
   array (
     'it' => 'https://www.poste.it',
   ),
-  'contacts' => 
+  'contacts' =>
   array (
   ),
   'metadata-set' => 'saml20-idp-remote',
   'sign.authnrequest' => true,
-  'SingleSignOnService' => 
+  'SingleSignOnService' =>
   array (
-    0 => 
+    0 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
       'Location' => 'https://posteid.poste.it/jod-fs/ssoservicepost',
     ),
-    1 => 
+    1 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
       'Location' => 'https://posteid.poste.it/jod-fs/ssoserviceredirect',
     ),
   ),
-  'SingleLogoutService' => 
+  'SingleLogoutService' =>
   array (
-    0 => 
+    0 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
       'Location' => 'https://posteid.poste.it/jod-fs/sloservicepost',
       'ResponseLocation' => 'https://posteid.poste.it/jod-fs/sloserviceresponsepost',
     ),
-    1 => 
+    1 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
       'Location' => 'https://posteid.poste.it/jod-fs/sloserviceredirect',
       'ResponseLocation' => 'https://posteid.poste.it/jod-fs/sloserviceresponseredirect',
     ),
   ),
-  'ArtifactResolutionService' => 
+  'ArtifactResolutionService' =>
   array (
   ),
-  'NameIDFormats' => 
+  'NameIDFormats' =>
   array (
     0 => 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
   ),
-  'keys' => 
+  'keys' =>
   array (
-    0 => 
+    0 =>
     array (
       'encryption' => false,
       'signing' => true,
@@ -296,84 +296,84 @@ b1fdaRSEuCQk2+gmdsiRcTs9EqPCCNiNlrNAiWEyGtL8A4ao3pDMwCtrb2yr',
 
 $metadata['https://identity.sieltecloud.it'] = array (
   'entityid' => 'https://identity.sieltecloud.it',
-  'description' => 
+  'description' =>
   array (
     'en' => 'Sielte S.p.A.',
     'it' => 'Sielte S.p.A.',
   ),
-  'OrganizationName' => 
+  'OrganizationName' =>
   array (
     'en' => 'Sielte S.p.A.',
     'it' => 'Sielte S.p.A.',
   ),
-  'name' => 
+  'name' =>
   array (
     'en' => 'http://www.sielte.it',
     'it' => 'http://www.sielte.it',
   ),
-  'OrganizationDisplayName' => 
+  'OrganizationDisplayName' =>
   array (
     'en' => 'http://www.sielte.it',
     'it' => 'http://www.sielte.it',
   ),
-  'url' => 
+  'url' =>
   array (
     'en' => 'http://www.sielte.it',
     'it' => 'http://www.sielte.it',
   ),
-  'OrganizationURL' => 
+  'OrganizationURL' =>
   array (
     'en' => 'http://www.sielte.it',
     'it' => 'http://www.sielte.it',
   ),
-  'contacts' => 
+  'contacts' =>
   array (
   ),
   'metadata-set' => 'saml20-idp-remote',
   'sign.authnrequest' => true,
-  'SingleSignOnService' => 
+  'SingleSignOnService' =>
   array (
-    0 => 
+    0 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
       'Location' => 'https://identity.sieltecloud.it/simplesaml/saml2/idp/SSO.php',
     ),
-    1 => 
+    1 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
       'Location' => 'https://identity.sieltecloud.it/simplesaml/saml2/idp/SSO.php',
     ),
   ),
-  'SingleLogoutService' => 
+  'SingleLogoutService' =>
   array (
-    0 => 
+    0 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
       'Location' => 'https://identity.sieltecloud.it/simplesaml/saml2/idp/SLS.php',
     ),
-    1 => 
+    1 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
       'Location' => 'https://identity.sieltecloud.it/simplesaml/saml2/idp/SLS.php',
     ),
   ),
-  'ArtifactResolutionService' => 
+  'ArtifactResolutionService' =>
   array (
   ),
-  'NameIDFormats' => 
+  'NameIDFormats' =>
   array (
     0 => 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
   ),
-  'keys' => 
+  'keys' =>
   array (
-    0 => 
+    0 =>
     array (
       'encryption' => false,
       'signing' => true,
       'type' => 'X509Certificate',
       'X509Certificate' => 'MIIDczCCAlugAwIBAgIJAMsX0iEKQM6xMA0GCSqGSIb3DQEBCwUAMFAxCzAJBgNVBAYTAklUMQ4wDAYDVQQIDAVJdGFseTEgMB4GA1UEBwwXU2FuIEdyZWdvcmlvIGRpIENhdGFuaWExDzANBgNVBAoMBlNpZWx0ZTAeFw0xNTEyMTQwODE0MTVaFw0yNTEyMTMwODE0MTVaMFAxCzAJBgNVBAYTAklUMQ4wDAYDVQQIDAVJdGFseTEgMB4GA1UEBwwXU2FuIEdyZWdvcmlvIGRpIENhdGFuaWExDzANBgNVBAoMBlNpZWx0ZTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANIRlOjM/tS9V9jYjJreqZSctuYriLfPTDgX2XdhWEbMpMpwA9p0bsbLQoC1gP0piLO+qbCsIh9+boPfb4/dLIA7E+Vmm5/+evOtzvjfHG4oXjZK6jo08QwkVV8Bm1jkakJPVZ57QFbyDSr+uBbIMY7CjA2LdgnIIwKN/kSfFhrZUMJ6ZxwegM100X5psfNPSV9WUtgHsvqlIlvydPo2rMm21sg+2d3Vtg8DthNSYRLqgazCc0NTsigrH7niSbJCO0nq/svMX2rSFdh5GFK7/pxT+c3OFWqIR8r+RX4qW+auJqkbTuNRwxV22Sm6r69ZJwV0WspvsVJi+FYqiyoWhgUCAwEAAaNQME4wHQYDVR0OBBYEFCUx063GwUhEFDllwCBe/+jdeW+XMB8GA1UdIwQYMBaAFCUx063GwUhEFDllwCBe/+jdeW+XMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEBADF94c3JwyBM86QBLeoUZxRYKPniba8B39FfJk0pb+LejKfZMvspOrOFgYQQ9UrS8IFkBX9Xr7/tjRbr2cPwZNjrEZhoq+NfcE09bnaWTyEl1IEKK8TWOupJj9UNVpYXX0LfIRrMwNEzAPQykOaqPOnyHxOCPTY957xXSo3jXOyvugtvPHbd+iliAzUoPm1tgiTKWS+EkQ/e22eFv5NEyT+oHiKovrQ+voPWOIvJVMjiTyxRic8fEnI9zzV0SxWvFvty77wgcYbeEuFZa3iidhojUge8o1uY/JUyQjFxcvvfAgWSIZwdHiNyWaAgwzLPmPCPsvBdR3xrlcDg/9Bd3D0=',
     ),
-    1 => 
+    1 =>
     array (
       'encryption' => true,
       'signing' => false,
@@ -388,71 +388,71 @@ $metadata['https://identity.sieltecloud.it'] = array (
 
 $metadata['https://loginspid.aruba.it'] = array (
   'entityid' => 'https://loginspid.aruba.it',
-  'description' => 
+  'description' =>
   array (
     'it' => 'ArubaPEC S.p.A.',
   ),
-  'OrganizationName' => 
+  'OrganizationName' =>
   array (
     'it' => 'ArubaPEC S.p.A.',
   ),
-  'name' => 
+  'name' =>
   array (
     'it' => 'ArubaPEC S.p.A.',
   ),
-  'OrganizationDisplayName' => 
+  'OrganizationDisplayName' =>
   array (
     'it' => 'ArubaPEC S.p.A.',
   ),
-  'url' => 
+  'url' =>
   array (
     'it' => 'https://www.pec.it/',
   ),
-  'OrganizationURL' => 
+  'OrganizationURL' =>
   array (
     'it' => 'https://www.pec.it/',
   ),
-  'contacts' => 
+  'contacts' =>
   array (
   ),
   'metadata-set' => 'saml20-idp-remote',
   'sign.authnrequest' => true,
-  'SingleSignOnService' => 
+  'SingleSignOnService' =>
   array (
-    0 => 
+    0 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
       'Location' => 'https://loginspid.aruba.it/ServiceLoginWelcome',
     ),
-    1 => 
+    1 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
       'Location' => 'https://loginspid.aruba.it/ServiceLoginWelcome',
     ),
   ),
-  'SingleLogoutService' => 
+  'SingleLogoutService' =>
   array (
-    0 => 
+    0 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
       'Location' => 'https://loginspid.aruba.it/ServiceLogoutRequest',
     ),
-    1 => 
+    1 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
       'Location' => 'https://loginspid.aruba.it/ServiceLogoutRequest',
     ),
   ),
-  'ArtifactResolutionService' => 
+  'ArtifactResolutionService' =>
   array (
   ),
-  'NameIDFormats' => 
+  'NameIDFormats' =>
   array (
     0 => 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
   ),
-  'keys' => 
+  'keys' =>
   array (
-    0 => 
+    0 =>
     array (
       'encryption' => false,
       'signing' => true,
@@ -487,71 +487,71 @@ hW/hLxLdhks68/TK694xVIuiB40pvMmJwxIyDA==',
 
 $metadata['https://idp.namirialtsp.com/idp'] = array (
   'entityid' => 'https://idp.namirialtsp.com/idp',
-  'description' => 
+  'description' =>
   array (
     'it' => 'Namirial',
   ),
-  'OrganizationName' => 
+  'OrganizationName' =>
   array (
     'it' => 'Namirial',
   ),
-  'name' => 
+  'name' =>
   array (
     'it' => 'Namirial S.p.a. Trust Service Provider',
   ),
-  'OrganizationDisplayName' => 
+  'OrganizationDisplayName' =>
   array (
     'it' => 'Namirial S.p.a. Trust Service Provider',
   ),
-  'url' => 
+  'url' =>
   array (
     'it' => 'https://www.namirialtsp.com',
   ),
-  'OrganizationURL' => 
+  'OrganizationURL' =>
   array (
     'it' => 'https://www.namirialtsp.com',
   ),
-  'contacts' => 
+  'contacts' =>
   array (
   ),
   'metadata-set' => 'saml20-idp-remote',
   'sign.authnrequest' => true,
-  'SingleSignOnService' => 
+  'SingleSignOnService' =>
   array (
-    0 => 
+    0 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
       'Location' => 'https://idp.namirialtsp.com/idp/profile/SAML2/POST/SSO',
     ),
-    1 => 
+    1 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
       'Location' => 'https://idp.namirialtsp.com/idp/profile/SAML2/Redirect/SSO',
     ),
   ),
-  'SingleLogoutService' => 
+  'SingleLogoutService' =>
   array (
-    0 => 
+    0 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
       'Location' => 'https://idp.namirialtsp.com/idp/profile/SAML2/POST/SLO',
     ),
-    1 => 
+    1 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
       'Location' => 'https://idp.namirialtsp.com/idp/profile/SAML2/Redirect/SLO',
     ),
   ),
-  'ArtifactResolutionService' => 
+  'ArtifactResolutionService' =>
   array (
   ),
-  'NameIDFormats' => 
+  'NameIDFormats' =>
   array (
     0 => 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
   ),
-  'keys' => 
+  'keys' =>
   array (
-    0 => 
+    0 =>
     array (
       'encryption' => false,
       'signing' => true,
@@ -580,67 +580,67 @@ jC3Y67LUWQ8YgOc=',
 
 $metadata['https://spid.register.it'] = array (
   'entityid' => 'https://spid.register.it',
-  'description' => 
+  'description' =>
   array (
     'it' => 'Register S.p.A.',
   ),
-  'OrganizationName' => 
+  'OrganizationName' =>
   array (
     'it' => 'Register S.p.A.',
   ),
-  'name' => 
+  'name' =>
   array (
     'it' => 'Register S.p.A.',
   ),
-  'OrganizationDisplayName' => 
+  'OrganizationDisplayName' =>
   array (
     'it' => 'Register S.p.A.',
   ),
-  'url' => 
+  'url' =>
   array (
     'it' => 'https//www.register.it',
   ),
-  'OrganizationURL' => 
+  'OrganizationURL' =>
   array (
     'it' => 'https//www.register.it',
   ),
-  'contacts' => 
+  'contacts' =>
   array (
   ),
   'metadata-set' => 'saml20-idp-remote',
   'sign.authnrequest' => true,
-  'SingleSignOnService' => 
+  'SingleSignOnService' =>
   array (
-    0 => 
+    0 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
       'Location' => 'https://spid.register.it/login/sso',
     ),
-    1 => 
+    1 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
       'Location' => 'https://spid.register.it/login/sso',
     ),
   ),
-  'SingleLogoutService' => 
+  'SingleLogoutService' =>
   array (
-    0 => 
+    0 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
       'Location' => 'https://spid.register.it/login/singleLogout',
       'ResponseLocation' => 'https://spid.register.it/login/singleLogout/response',
     ),
   ),
-  'ArtifactResolutionService' => 
+  'ArtifactResolutionService' =>
   array (
   ),
-  'NameIDFormats' => 
+  'NameIDFormats' =>
   array (
     0 => 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
   ),
-  'keys' => 
+  'keys' =>
   array (
-    0 => 
+    0 =>
     array (
       'encryption' => false,
       'signing' => true,
@@ -653,75 +653,75 @@ $metadata['https://spid.register.it'] = array (
 // INTESA ID
 $metadata['https://spid.intesa.it'] = array (
   'entityid' => 'https://spid.intesa.it',
-  'description' => 
+  'description' =>
   array (
     'it' => 'IN.TE.S.A.
             S.p.A.',
   ),
-  'OrganizationName' => 
+  'OrganizationName' =>
   array (
     'it' => 'IN.TE.S.A.
             S.p.A.',
   ),
-  'name' => 
+  'name' =>
   array (
     'it' => 'Intesa S.p.A.',
   ),
-  'OrganizationDisplayName' => 
+  'OrganizationDisplayName' =>
   array (
     'it' => 'Intesa S.p.A.',
   ),
-  'url' => 
+  'url' =>
   array (
     'it' => 'https://www.intesa.it/',
   ),
-  'OrganizationURL' => 
+  'OrganizationURL' =>
   array (
     'it' => 'https://www.intesa.it/',
   ),
-  'contacts' => 
+  'contacts' =>
   array (
   ),
   'metadata-set' => 'saml20-idp-remote',
   'sign.authnrequest' => true,
-  'SingleSignOnService' => 
+  'SingleSignOnService' =>
   array (
-    0 => 
+    0 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
       'Location' => 'https://spid.intesa.it/Time4UserServices/services/idp/AuthnRequest/',
     ),
-    1 => 
+    1 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
       'Location' => 'https://spid.intesa.it/Time4UserServices/services/idp/AuthnRequest/',
     ),
   ),
-  'SingleLogoutService' => 
+  'SingleLogoutService' =>
   array (
-    0 => 
+    0 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
       'Location' => 'https://spid.intesa.it/Time4UserServices/services/idp/SingleLogout',
       'ResponseLocation' => 'https://spid.intesa.it/Time4UserServices/services/idp/SingleLogout',
     ),
-    1 => 
+    1 =>
     array (
       'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
       'Location' => 'https://spid.intesa.it/Time4UserServices/services/idp/SingleLogout',
       'ResponseLocation' => 'https://spid.intesa.it/Time4UserServices/services/idp/SingleLogout',
     ),
   ),
-  'ArtifactResolutionService' => 
+  'ArtifactResolutionService' =>
   array (
   ),
-  'NameIDFormats' => 
+  'NameIDFormats' =>
   array (
     0 => 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
   ),
-  'keys' => 
+  'keys' =>
   array (
-    0 => 
+    0 =>
     array (
       'encryption' => false,
       'signing' => true,

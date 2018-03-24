@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.0" type="module" client="site" method="upgrade">
+	<name>mod_spid_loa</name>
+	<author>Helios Ciancio</author>
+	<creationDate>March 2018</creationDate>
+	<copyright>(C) 2017, 2018 Helios Ciancio. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
+	<authorEmail>info@eshiol.it</authorEmail>
+	<authorUrl>www.eshiol.it</authorUrl>
+	<version>3.8.5</version>
+	<description>MOD_SPID_LOA_XML_DESCRIPTION</description>
+	<updateservers>
+		<server type="extension" priority="2" name="SPiD Login">https://www.eshiol.it/files/spid/mod_spid_loa.xml</server>
+	</updateservers>
+	<files>
+		<filename module="mod_spid_loa">mod_spid_loa.php</filename>
+		<folder>tmpl</folder>
+	</files>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.mod_spid_loa.ini</language>
+		<language tag="en-GB">en-GB/en-GB.mod_spid_loa.sys.ini</language>
+		<language tag="it-IT">it-IT/it-IT.mod_spid_loa.ini</language>
+		<language tag="it-IT">it-IT/it-IT.mod_spid_loa.sys.ini</language>
+	</languages>
+</extension>

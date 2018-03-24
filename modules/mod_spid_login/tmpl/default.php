@@ -47,7 +47,7 @@ $mod_spid_login = 'mod-spid-login-' . $module->id;
 		</div>
 
 	<?php
-		$buttons = ['s' => 'small', 'm' => 'medium', 'l' => 'large', 'xl' => 'xlarge']; 
+		$buttons = ['s' => 'small', 'm' => 'medium', 'l' => 'large', 'xl' => 'xlarge'];
 		$size = $params->get('size', 'm');
 		$button = $buttons[$size];
 	?>
@@ -70,7 +70,7 @@ $mod_spid_login = 'mod-spid-login-' . $module->id;
 					'timid' => 		'https://login.id.tim.it/affwebservices/public/saml2sso'
 					); ?>
 				<?php foreach ($idps as $idp => $entityid) : ?>
-				<?php 
+				<?php
 				if (!isset($metadata[$entityid]['description']))
 				{
 					$description = $id;
