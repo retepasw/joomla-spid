@@ -5,10 +5,77 @@
 			label="PLG_USER_SPID_SLIDER_LABEL"
 		>
 			<field
-				name="minimumLoA"
+				name="spid"
+				type="hidden"
+				filter="boolean" 
+				description="PLG_USER_SPID_FIELD_SPID_DESC"
+				label="PLG_USER_SPID_FIELD_SPID_LABEL"
+				/>
+
+			<field
+				name="fiscalNumber"
+				type="text"
+				description="PLG_USER_SPID_FIELD_FISCALNUMBER_DESC"
+				label="PLG_USER_SPID_FIELD_FISCALNUMBER_LABEL"
+				default=""
+				/>
+
+			<field
+				name="firstName"
+				type="text"
+				description="PLG_USER_SPID_FIELD_FIRSTNAME_DESC"
+				label="PLG_USER_SPID_FIELD_FIRSTNAME_LABEL"
+				default=""
+				/>
+
+			<field
+				name="lastName"
+				type="text"
+				description="PLG_USER_SPID_FIELD_LASTNAME_DESC"
+				label="PLG_USER_SPID_FIELD_LASTNAME_LABEL"
+				default=""
+				/>
+
+			<field
+				name="gender"
 				type="list"
-				description="PLG_USER_SPID_CONFIG_FIELD_MINIMUMLOA_DESC"
-				label="PLG_USER_SPID_CONFIG_FIELD_MINIMUMLOA_LABEL"
+				description="PLG_USER_SPID_FIELD_GENDER_DESC"
+				label="PLG_USER_SPID_FIELD_GENDER_LABEL"
+				default=""
+				>
+				<option
+					value="">JLIB_UNKNOWN
+				</option>
+				<option
+					value="F">PLG_USER_SPID_FIELD_GENDER_F
+				</option>
+				<option
+					value="M">PLG_USER_SPID_FIELD_GENDER_M
+				</option>
+			</field>
+
+			<field
+				name="birthPlace"
+				type="text"
+				description="PLG_USER_SPID_FIELD_BIRTHPLACE_DESC"
+				label="PLG_USER_SPID_FIELD_BIRTHPLACE_LABEL"
+			/>
+
+			<field
+				name="dob"
+				type="calendar"
+				description="PLG_USER_SPID_FIELD_DOB_DESC"
+				label="PLG_USER_SPID_FIELD_DOB_LABEL"
+				translateformat="true"
+				showtime="false"
+				filter="server_utc"
+			/>
+
+			<field
+				name="loa"
+				type="list"
+				description="PLG_USER_SPID_FIELD_LOA_DESC"
+				label="PLG_USER_SPID_FIELD_LOA_LABEL"
 				default=""
 				>
 				<option
