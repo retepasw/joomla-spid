@@ -24,6 +24,26 @@
 	<config>
 		<fields name="params">
 			<fieldset
+				name="basic"
+				>
+				<field
+					name="profile"
+					type="radio"
+					description="PLG_USER_SPID_PROFILE_DESC"
+					label="PLG_USER_SPID_PROFILE_LABEL"
+					class="btn-group btn-group-yesno"
+					default="0"
+					>
+					<option
+						value="0">JNO
+					</option>
+					<option
+						value="1">JYES
+					</option>
+				</field>
+			</fieldset>
+
+			<fieldset
 				name="advanced"
 				>
 				<field

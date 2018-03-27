@@ -134,64 +134,11 @@ class plgUserSpid extends JPlugin
 	public function onUserLogin($user, $options = array())
 	{
 		JLog::add(new JLogEntry(__METHOD__, JLog::DEBUG, 'plg_user_spid'));
-		JLog::add(new JLogEntry(print_r($user, true), JLog::DEBUG, 'plg_user_spid'));
 
-		if (($user['status'] == 1) && ($user['type'] == 'SPiD'))
+		if (isset($user['spid']))
 		{
-			unset($user['error_message']);
+			$this->app->setUserState('spid.authsource', $user['spid']['authsource']);
 			$this->app->setUserState('spid.loa', $user['spid']['loa']);
-
-			$user['spid']['spid'] = true;
-			$keys = array('spid', 'fiscalNumber', 'firstName', 'lastName', 'gender', 'birthPlace', 'dob');
-			try
-			{
-				$userId = (int) JUser::getInstance($user['username'])->id;
-
-				$db = JFactory::getDbo();
-
-				$profiles = array();
-				foreach ($keys as $k)
-				{
-					$profiles[] = $db->quote('profile.' . $k);
-				}
-
-				$query = $db->getQuery(true)
-					->delete($db->quoteName('#__user_profiles'))
-					->where($db->quoteName('user_id') . ' = ' . $userId)
-					->where($db->quoteName('profile_key') . ' IN (' . implode(',', $profiles) . ')');
-				JLog::add(new JLogEntry($query, JLog::DEBUG, 'plg_user_spid'));
-				$db->setQuery($query);
-				$db->execute();
-				
-				$query = $db->getQuery(true)
-					->select('MAX(ordering) as ' . $db->quoteName('max'))
-					->from('#__user_profiles')
-					->where($db->quoteName('user_id') . ' = ' . $userId)
-					->where($db->quoteName('profile_key') . ' LIKE ' . $db->quote('profile.%'));
-				JLog::add(new JLogEntry($query, JLog::DEBUG, 'plg_user_spid'));
-				$db->setQuery($query);
-				$order = (int) $db->loadResult('max', 0) + 1;
-
-				$tuples = array();
-				foreach ($keys as $k)
-				{
-					if (isset($user['spid'][$k]))
-					{
-						$tuples[] = '(' . $userId . ', ' . $db->quote('profile.' . $k) . ', ' . $db->quote(json_encode($user['spid'][$k])) . ', ' . $order++ . ')';
-					}
-				}
-
-				$query = 'INSERT INTO #__user_profiles VALUES ' . implode(', ', $tuples);
-				JLog::add(new JLogEntry($query, JLog::DEBUG, 'plg_user_spid'));
-				$db->setQuery($query);
-				$db->execute();
-			}
-			catch (RuntimeException $e)
-			{
-				$this->_subject->setError($e->getMessage());
-				return false;
-			}
-			
 		}
 
 		return true;
@@ -210,7 +157,6 @@ class plgUserSpid extends JPlugin
 	{
 		JLog::add(new JLogEntry(__METHOD__, JLog::DEBUG, 'plg_user_spid'));
 		JLog::add(new JLogEntry(print_r($response, true), JLog::DEBUG, 'plg_user_spid'));
-		JLog::add(new JLogEntry($this->authsource, JLog::DEBUG, 'plg_user_spid'));
 
 		if (isset($response['type']) && $response['type'] == 'SPiD')
 		{
@@ -219,9 +165,9 @@ class plgUserSpid extends JPlugin
 					array('message' => $response['error_message'], 'type' => 'warning')
 				));
 		
-			if (class_exists('\SimpleSAML_Auth_Simple') && $this->authsource)
+			if (class_exists('\SimpleSAML_Auth_Simple') && isset($response['spid']) && isset($response['spid']['authsource']))
 			{
-				$as = new \SimpleSAML_Auth_Simple($this->authsource);
+				$as = new \SimpleSAML_Auth_Simple($response['spid']['authsource']);
 				if ($as->isAuthenticated())
 				{
 					$as->logout();
@@ -241,6 +187,11 @@ class plgUserSpid extends JPlugin
 	public function onContentPrepareData($context, $data)
 	{
 		JLog::add(new JLogEntry(__METHOD__, JLog::DEBUG, 'plg_user_spid'));
+
+		if (!$this->params->get('profile', false))
+		{
+			return;
+		}
 
 		// Check we are manipulating a valid form.
 		if (!in_array($context, array('com_users.profile', 'com_users.user', 'com_users.registration', 'com_admin.profile')))
@@ -301,14 +252,17 @@ class plgUserSpid extends JPlugin
 	public function onContentPrepareForm($form, $data)
 	{
 		JLog::add(new JLogEntry(__METHOD__, JLog::DEBUG, 'plg_user_spid'));
-		JLog::add(new JLogEntry(print_r($data, true), JLog::DEBUG, 'plg_user_spid'));
 
-/**
+		if (!$this->params->get('profile', false))
+		{
+			return;
+		}
+
 		if ($this->app->isSite())
 		{
 			return;
 		}
-*/
+
 		if (!($form instanceof JForm))
 		{
 			$this->_subject->setError('JERROR_NOT_A_FORM');
@@ -317,8 +271,6 @@ class plgUserSpid extends JPlugin
 
 		// Check we are manipulating a valid form.
 		$name = $form->getName();
-		JLog::add(new JLogEntry('form name: ' . $name, JLog::DEBUG, 'plg_user_spid'));
-
 		if (!in_array($name, array('com_admin.profile', 'com_users.user', 'com_users.profile', 'com_users.registration')))
 		{
 			return true;
@@ -328,40 +280,6 @@ class plgUserSpid extends JPlugin
 		JForm::addFormPath(__DIR__ . '/profiles');
 		$form->loadFile('profile', false);
 
-		$fields = array('fiscalNumber', 'firstName', 'lastName', 'gender', 'birthPlace', 'dob');
-
-		if ($this->app->isSite())
-//		if ($this->app->isClient('site') || $name === 'com_users.user' || $name === 'com_admin.profile')
-		{
-			$form->removeField('loa', 'profile');
-		}
-
-		$profile = array();
-		if (is_array($data) && key_exists('profile', $data))
-		{
-			$profile = $data['id'];
-		}
-		if (is_object($data) && isset($data->id))
-		{
-			$profile = $data->profile;
-		}
-
-		if (isset($profile['spid']) && $profile['spid'])
-		{
-			foreach ($fields as $field)
-			{
-				$form->setFieldAttribute($field, 'readonly', 'readonly', 'profile');
-			}
-		}
-
-		// Drop the profile form entirely if there aren't any fields to display.
-		$remainingfields = $form->getGroup('profile');
-		
-		if (!count($remainingfields))
-		{
-			$form->removeGroup('profile');
-		}
-		
 		return true;
 	}
 
@@ -388,19 +306,10 @@ class plgUserSpid extends JPlugin
 			try
 			{
 				$db = JFactory::getDbo();
-
-				$keys = array_keys($data['profile']);
-
-				foreach ($keys as &$key)
-				{
-					$key = 'profile.' . $key;
-					$key = $db->quote($key);
-				}
-
 				$query = $db->getQuery(true)
-					->delete($db->quoteName('#__user_profiles'))
-					->where($db->quoteName('user_id') . ' = ' . (int) $userId)
-					->where($db->quoteName('profile_key') . ' IN (' . implode(',', $keys) . ')');
+					->delete($db->qn('#__user_profiles'))
+					->where($db->qn('user_id') . ' = ' . (int) $userId)
+					->where($db->qn('profile_key') . ' LIKE ' . $db->q('profile.%'));
 				$db->setQuery($query);
 				$db->execute();
 

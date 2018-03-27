@@ -16,7 +16,6 @@
 	</updateservers>
 	<files>
 		<folder type="plugin" id="spid" group="authentication">plg_authentication_spid-3.8.5.zip</folder>
-		<folder type="plugin" id="spid" group="system">plg_system_spid-3.8.5.zip</folder>
 		<folder type="plugin" id="spid" group="user">plg_user_spid-3.8.5.zip</folder>
 		<folder type="module" id="spid_login" client="site">mod_spid_login-3.8.4.zip</folder>
 		<folder type="module" id="spid_loa" client="site">mod_spid_loa-3.8.5.zip</folder>
