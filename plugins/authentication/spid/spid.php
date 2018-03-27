@@ -127,11 +127,13 @@ class plgAuthenticationSpid extends JPlugin
 		if ($as->isAuthenticated())
 		{
 			JLog::add(new JLogEntry('User is authenticated', JLog::DEBUG, 'plg_authentication_spid'));
+			$this->app->setUserState('spid.authsource', $authsource);
 			$attributes = $as->getAttributes();
-			JLog::add(new JLogEntry(print_r($as, true), JLog::DEBUG, 'plg_authentication_spid'));
+			JLog::add(new JLogEntry(print_r($attributes, true), JLog::DEBUG, 'plg_authentication_spid'));
+
 			if ($this->params->get('removeTINPrefix', true))
 			{
-				if( ($i = strpos($attributes['fiscalNumber'][0], '-')) !== FALSE )
+				if( ($i = strpos($attributes['fiscalNumber'][0], '-')) !== false)
 				{
 					$attributes['fiscalNumber'][0] = substr($attributes['fiscalNumber'][0], $i + 1);
 				}
@@ -139,27 +141,45 @@ class plgAuthenticationSpid extends JPlugin
 			$username = $attributes['fiscalNumber'][0];
 			$uparams = JComponentHelper::getParams('com_users');
 
+			require_once __DIR__ . '/fiscalnumber.php';
+			$fiscalNumber = new FiscalNumber((($i = strpos($attributes['fiscalNumber'][0], '-')) !== false) 
+				? substr($attributes['fiscalNumber'][0], $i + 1) 
+				: $attributes['fiscalNumber'][0]);
+			
+			$spid_response = array(
+				'loa'          => $loa,
+				'authsource'   => $authsource,
+//				'spidCode'     => $attributes['spidCode'][0],
+				'fiscalNumber' => $fiscalNumber->getFiscalNumber(),
+				'firstName'    => $attributes['name'][0],
+				'lastName'     => $attributes['familyName'][0],
+				'gender'       => $attributes['gender'][0],
+				'dob'          => date("d-m-Y", strtotime($attributes['dateOfBirth'][0])),
+				'birthPlace'   => $fiscalNumber->getBirthPlace(),
+				'email'        => $attributes['email'][0],
+			);
+			JLog::add(new JLogEntry(print_r($spid_response, true), JLog::DEBUG, 'plg_authentication_spid'));
+
 			if (JUser::getInstance($username)->id)
 			{
-				$response->spid = array(
-					'loa'        => $loa,
-					'authsource' => $authsource
-				);
+				$response->spid = $spid_response;
 
-				$minimumLoA = $this->getProfile(JUser::getInstance($username)->id, 'minimumLoA', $this->params->get(minimumLoA, 'SpidL1'));
+				$minimumLoA     = $this->getProfile(JUser::getInstance($username)->id, 'loa', $this->params->get('loa', 'SpidL1'));
 
 				if ($loa < $minimumLoA)
 				{
-					$response->status  = JAuthentication::STATUS_FAILURE;
+					$response->status        = JAuthentication::STATUS_FAILURE;
 					$response->error_message = JText::sprintf('PLG_AUTHENTICATION_SPID_LOA_ERROR', $loa, $minimumLoA);
 
 					return;
 				}
 
-				$response->status = JAuthentication::STATUS_SUCCESS;
-				$response->username = $username;
-				$response->email = JStringPunycode::emailToPunycode($attributes['email'][0]);
-				$response->fullname = $attributes['name'][0].' '.$attributes['familyName'][0];
+				$response->status    = JAuthentication::STATUS_SUCCESS;
+				$response->username  = $username;
+				$response->email     = JStringPunycode::emailToPunycode($spid_response['email']);
+				$response->fullname  = $spid_response['firstName'] . ' ' . $spid_response['lastName'];
+				$response->gender    = $spid_response['gender'];
+				$response->birthdate = $spid_response['dob'];
 			}
 			else
 			{
@@ -172,7 +192,7 @@ class plgAuthenticationSpid extends JPlugin
 					// Build the query.
 					$query->select('username')
 						->from('#__users')
-						->where('email = ' . $db->q(JStringPunycode::emailToPunycode($attributes['email'][0])));
+						->where('email = ' . $db->q(JStringPunycode::emailToPunycode($spid_response['email'])));
 
 					// Set and query the database.
 					$db->setQuery($query);
@@ -180,16 +200,13 @@ class plgAuthenticationSpid extends JPlugin
 
 					if ($username_new)
 					{
-						$response->spid = array(
-							'loa'        => $loa,
-							'authsource' => $authsource
-						);
+						$response->spid = $spid_response;
 
-						$minimumLoA = $this->getProfile(JUser::getInstance($username_new)->id, 'minimumLoA') ?: $this->params->get(minimumLoA, 'SpidL1');
+						$minimumLoA = $this->getProfile(JUser::getInstance($username_new)->id, 'loa') ?: $this->params->get('loa', 'SpidL1');
 
 						if ($loa < $minimumLoA)
 						{
-							$response->status  = JAuthentication::STATUS_FAILURE;
+							$response->status        = JAuthentication::STATUS_FAILURE;
 							$response->error_message = JText::sprintf('PLG_AUTHENTICATION_SPID_LOA_ERROR', $loa, $minimumLoA);
 
 							return;
@@ -201,8 +218,8 @@ class plgAuthenticationSpid extends JPlugin
 
 							// Build the query.
 							$query->update('#__users')
-								->set('username = ' . $db->q($attributes['fiscalNumber'][0]))
-								->where('email = ' . $db->q(JStringPunycode::emailToPunycode($attributes['email'][0])));
+								->set('username = ' . $db->q($spid_response['fiscalNumber']))
+								->where('email = ' . $db->q(JStringPunycode::emailToPunycode($spid_response['email'])));
 
 							// Set and query the database.
 							$db->setQuery($query);
@@ -210,7 +227,7 @@ class plgAuthenticationSpid extends JPlugin
 							try
 							{
 								$db->execute();
-								$username_new = $attributes['fiscalNumber'][0];
+								$username_new = $spid_response['fiscalNumber'];
 								$this->app->enqueueMessage(JText::sprintf('PLG_AUTHENTICATION_SPID_PROFILE_UPDATE_SUCCESS', $username), 'notice');
 							}
 							catch (Exception $e)
@@ -218,10 +235,12 @@ class plgAuthenticationSpid extends JPlugin
 							}
 						}
 
-						$response->status = JAuthentication::STATUS_SUCCESS;
-						$response->username = $username_new;
-						$response->email = JStringPunycode::emailToPunycode($attributes['email'][0]);
-						$response->fullname = $attributes['name'][0].' '.$attributes['familyName'][0];
+						$response->status    = JAuthentication::STATUS_SUCCESS;
+						$response->username  = $username_new;
+						$response->email     = JStringPunycode::emailToPunycode($spid_response['email']);
+						$response->fullname  = $spid_response['firstName'] . ' ' . $spid_response['lastName'];
+						$response->gender    = $spid_response['gender'];
+						$response->birthdate = $spid_response['dob'];
 
 						return true;
 					}
@@ -230,10 +249,16 @@ class plgAuthenticationSpid extends JPlugin
 				if ($this->params->get('allowUserRegistration', $uparams->get('allowUserRegistration')))
 				{
 					// user data
-					$data['name'] = $attributes['name'][0].' '.$attributes['familyName'][0];
+					$data['name']     = $spid_response['firstName'] . ' ' . $spid_response['lastName'];
 					$data['username'] = $username;
-					$data['email'] = $data['email1'] = $data['email2'] = JStringPunycode::emailToPunycode($attributes['email'][0]);
+					$data['email']    = $data['email1']    = $data['email2']    = JStringPunycode::emailToPunycode($spid_response['email']);
 					$data['password'] = $data['password1'] = $data['password2'] = JUserHelper::genRandomPassword();
+
+					$data['profile']['spid'] = true;
+					foreach (array('fiscalNumber', 'firstName', 'lastName', 'gender', 'birthPlace', 'dob') as $k)
+					{
+						$data['profile'][$k] = $spid_response[$k];
+					}
 
 					// Get the model and validate the data.
 					jimport('joomla.application.component.model');
@@ -270,16 +295,13 @@ class plgAuthenticationSpid extends JPlugin
 					$user = JUser::getInstance($username);
 					if (($user->block == 0) && (!$user->activation))
 					{
-						$response->spid = array(
-							'loa'        => $loa,
-							'authsource' => $authsource
-						);
+						$response->spid = $spid_response;
 
-						$minimumLoA = $this->getProfile($user->id, 'minimumLoA') ?: $this->params->get(minimumLoA, 'SpidL1');
+						$minimumLoA = $this->getProfile($user->id, 'loa') ?: $this->params->get('loa', 'SpidL1');
 
 						if ($loa < $minimumLoA)
 						{
-							$response->status  = JAuthentication::STATUS_FAILURE;
+							$response->status        = JAuthentication::STATUS_FAILURE;
 							$response->error_message = JText::sprintf('PLG_AUTHENTICATION_SPID_LOA_ERROR', $loa, $minimumLoA);
 
 							return;
@@ -288,11 +310,13 @@ class plgAuthenticationSpid extends JPlugin
 						$session = JFactory::getSession();
 						$session->set('user', $user);
 
-						$response->status = JAuthentication::STATUS_SUCCESS;
-						$response->username = $username;
-						$response->email = $data['email'];
-						$response->fullname = $data['name'];
+						$response->status         = JAuthentication::STATUS_SUCCESS;
+						$response->username       = $username;
+						$response->email          = $data['email'];
+						$response->fullname       = $data['name'];
 						$response->password_clear = $data['password'];
+						$response->gender         = $spid_response['gender'];
+						$response->birthdate      = $spid_response['dob'];
 					}
 
 					// Flush the data from the session.
@@ -340,7 +364,6 @@ class plgAuthenticationSpid extends JPlugin
 		}
 		return $pw;
 	}
-
 
 	/**
 	 * @param   integer		$userid		The user id
