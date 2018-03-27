@@ -12,7 +12,7 @@
  * is derivative of works licensed under the GNU General Public License
  * or other free or open source software licenses.
  */
- 
+
 // no direct access
 defined('_JEXEC') or die('Restricted access.');
 
@@ -20,7 +20,7 @@ JFormHelper::loadFieldClass('list');
 
 /**
  * Form Field class for the Authsource.
- * 
+ *
  * @version		3.8.0
  * @since		3.7.5
  */
@@ -57,7 +57,7 @@ class JFormFieldAuthsource extends JFormFieldList
 		if (file_exists($metadata_file = JPATH_ROOT.'/simplespidphp/config/authsources.php'))
 		{
 		    require $metadata_file;
-		    
+
 		}
 		elseif (file_exists($metadata_file = JPATH_ROOT.'/../simplespidphp/config/authsources.php'))
 		{

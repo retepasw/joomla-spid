@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="profile">
+		<fieldset name="profile"
+			label="PLG_USER_SPID_SLIDER_LABEL"
+		>
+			<field
+				name="minimumLoA"
+				type="list"
+				description="PLG_USER_SPID_CONFIG_FIELD_MINIMUMLOA_DESC"
+				label="PLG_USER_SPID_CONFIG_FIELD_MINIMUMLOA_LABEL"
+				default=""
+				>
+				<option
+					value="">JGLOBAL_USE_GLOBAL
+				</option>
+				<option
+					value="SpidL1">SpidL1
+				</option>
+				<option
+					value="SpidL2">SpidL2
+				</option>
+				<option
+					value="SpidL3">SpidL3
+				</option>
+			</field>
+		</fieldset>
+	</fields>
+</form>

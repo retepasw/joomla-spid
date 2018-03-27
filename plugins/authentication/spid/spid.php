@@ -15,12 +15,22 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\Registry\Registry;
+
 /**
- * @version		3.8.2
+ * @version		3.8.5
  * @since		3.7
  */
 class plgAuthenticationSpid extends JPlugin
 {
+	/**
+	 * Application object.
+	 *
+	 * @var    JApplicationCms
+	 * @since  3.8.5
+	 */
+	protected $app;
+
 	/**
 	 * Load the language file on instantiation.
 	 *
@@ -86,8 +96,7 @@ class plgAuthenticationSpid extends JPlugin
 
 		if (!class_exists('\SimpleSAML_Auth_Simple')) return true;
 
-		$app    = JFactory::getApplication();
-		$input  = $app->input;
+		$input  = $this->app->input;
 		$method = $input->getMethod();
 
 		$idp = $input->$method->get('modspid-idp', '', 'RAW');
@@ -102,9 +111,11 @@ class plgAuthenticationSpid extends JPlugin
 		$options['saml:idp'] = urldecode($idp);
 
 		$authsource = $input->$method->get('modspid-authsource', 'default-sp', 'RAW');
+		$loa        = $input->$method->get('modspid-loa', 'SpidL1', 'RAW');
+
 		// Require the user to be authenticated.
 		$options['ErrorURL'] = JUri::root();
-		$options['saml:AuthnContextClassRef'] = 'https://www.spid.gov.it/' . $input->$method->get('modspid-loa', 'SpidL1', 'RAW');
+		$options['saml:AuthnContextClassRef'] = 'https://www.spid.gov.it/' . $loa;
 
 		JLog::add(new JLogEntry('Authenticating...', JLog::DEBUG, 'plg_authentication_spid'));
 		JLog::add(new JLogEntry($authsource, JLog::DEBUG, 'plg_authentication_spid'));
@@ -130,14 +141,25 @@ class plgAuthenticationSpid extends JPlugin
 
 			if (JUser::getInstance($username)->id)
 			{
+				$response->spid = array(
+					'loa'        => $loa,
+					'authsource' => $authsource
+				);
+
+				$minimumLoA = $this->getProfile(JUser::getInstance($username)->id, 'minimumLoA', $this->params->get(minimumLoA, 'SpidL1'));
+
+				if ($loa < $minimumLoA)
+				{
+					$response->status  = JAuthentication::STATUS_FAILURE;
+					$response->error_message = JText::sprintf('PLG_AUTHENTICATION_SPID_LOA_ERROR', $loa, $minimumLoA);
+
+					return;
+				}
+
 				$response->status = JAuthentication::STATUS_SUCCESS;
 				$response->username = $username;
 				$response->email = JStringPunycode::emailToPunycode($attributes['email'][0]);
 				$response->fullname = $attributes['name'][0].' '.$attributes['familyName'][0];
-				$response->loa = $input->$method->get('modspid-loa', 'SpidL1', 'RAW');
-
-				// Save the authentication source in the session.
-				JFactory::getSession()->set('spid.authsource', $authsource);
 			}
 			else
 			{
@@ -158,6 +180,21 @@ class plgAuthenticationSpid extends JPlugin
 
 					if ($username_new)
 					{
+						$response->spid = array(
+							'loa'        => $loa,
+							'authsource' => $authsource
+						);
+
+						$minimumLoA = $this->getProfile(JUser::getInstance($username_new)->id, 'minimumLoA') ?: $this->params->get(minimumLoA, 'SpidL1');
+
+						if ($loa < $minimumLoA)
+						{
+							$response->status  = JAuthentication::STATUS_FAILURE;
+							$response->error_message = JText::sprintf('PLG_AUTHENTICATION_SPID_LOA_ERROR', $loa, $minimumLoA);
+
+							return;
+						}
+
 						if ($allowEmailAuthentication == 2)
 						{
 							$query = $db->getQuery(true);
@@ -174,7 +211,7 @@ class plgAuthenticationSpid extends JPlugin
 							{
 								$db->execute();
 								$username_new = $attributes['fiscalNumber'][0];
-								$app->enqueueMessage(JText::sprintf('PLG_AUTHENTICATION_SPID_PROFILE_UPDATE_SUCCESS', $username), 'notice');
+								$this->app->enqueueMessage(JText::sprintf('PLG_AUTHENTICATION_SPID_PROFILE_UPDATE_SUCCESS', $username), 'notice');
 							}
 							catch (Exception $e)
 							{
@@ -185,10 +222,6 @@ class plgAuthenticationSpid extends JPlugin
 						$response->username = $username_new;
 						$response->email = JStringPunycode::emailToPunycode($attributes['email'][0]);
 						$response->fullname = $attributes['name'][0].' '.$attributes['familyName'][0];
-						$response->loa = $input->$method->get('modspid-loa', 'SpidL1', 'RAW');
-
-						// Save the authentication source in the session.
-						JFactory::getSession()->set('spid.authsource', $authsource);
 
 						return true;
 					}
@@ -210,7 +243,8 @@ class plgAuthenticationSpid extends JPlugin
 
 					$return = $model->register($data);
 
-					if ($return === false) {
+					if ($return === false)
+					{
 						$errors = $model->getErrors();
 						$response->status = JAuthentication::STATUS_FAILURE;
 
@@ -230,12 +264,27 @@ class plgAuthenticationSpid extends JPlugin
 						$response->message = ($duplicate ? JText::_('PLG_AUTHENTICATION_SPID_REGISTER_EMAIL1_MESSAGE') : 'USER NOT EXISTS AND FAILED THE CREATION PROCESS');
 
 						$login_url = JUri::getInstance();
-						$app->redirect($login_url, $response->message, 'error');
+						$this->app->redirect($login_url, $response->message, 'error');
 					}
 
 					$user = JUser::getInstance($username);
 					if (($user->block == 0) && (!$user->activation))
 					{
+						$response->spid = array(
+							'loa'        => $loa,
+							'authsource' => $authsource
+						);
+
+						$minimumLoA = $this->getProfile($user->id, 'minimumLoA') ?: $this->params->get(minimumLoA, 'SpidL1');
+
+						if ($loa < $minimumLoA)
+						{
+							$response->status  = JAuthentication::STATUS_FAILURE;
+							$response->error_message = JText::sprintf('PLG_AUTHENTICATION_SPID_LOA_ERROR', $loa, $minimumLoA);
+
+							return;
+						}
+
 						$session = JFactory::getSession();
 						$session->set('user', $user);
 
@@ -247,30 +296,30 @@ class plgAuthenticationSpid extends JPlugin
 					}
 
 					// Flush the data from the session.
-					$app->setUserState('com_users.registration.data', null);
+					$this->app->setUserState('com_users.registration.data', null);
 
 					// Redirect to the profile screen.
 					JFactory::getLanguage()->load('com_users', JPATH_SITE);
 					if ($return === 'adminactivate')
 					{
-						$app->enqueueMessage(JText::_('PLG_AUTHENTICATION_SPID_REGISTRATION_COMPLETE_VERIFY'));
-						$app->redirect(JRoute::_('index.php?option=com_users&view=registration&layout=complete', false));
+						$this->app->enqueueMessage(JText::_('PLG_AUTHENTICATION_SPID_REGISTRATION_COMPLETE_VERIFY'));
+						$this->app->redirect(JRoute::_('index.php?option=com_users&view=registration&layout=complete', false));
 					}
 					elseif ($return === 'useractivate')
 					{
-						$app->enqueueMessage(JText::_('COM_USERS_REGISTRATION_COMPLETE_ACTIVATE'));
-						$app->redirect(JRoute::_('index.php?option=com_users&view=registration&layout=complete', false));
+						$this->app->enqueueMessage(JText::_('COM_USERS_REGISTRATION_COMPLETE_ACTIVATE'));
+						$this->app->redirect(JRoute::_('index.php?option=com_users&view=registration&layout=complete', false));
 					}
 					else
 					{
-						$app->enqueueMessage(JText::_('COM_USERS_REGISTRATION_SAVE_SUCCESS'));
-						$app->redirect(JRoute::_('index.php?option=com_users&view=login', false));
+						$this->app->enqueueMessage(JText::_('COM_USERS_REGISTRATION_SAVE_SUCCESS'));
+						$this->app->redirect(JRoute::_('index.php?option=com_users&view=login', false));
 					}
 				}
 				else
 				{
 					// Invalid user
-					$response->status		= JAuthentication::STATUS_FAILURE;
+					$response->status        = JAuthentication::STATUS_FAILURE;
 					$response->error_message = JText::_('JGLOBAL_AUTH_NO_USER');
 					JLog::add(new JLogEntry(JText::_('JGLOBAL_AUTH_NO_USER'), JLog::DEBUG, 'plg_authentication_spid'));
 				}
@@ -290,5 +339,36 @@ class plgAuthenticationSpid extends JPlugin
 			$pw .= $chars[ord($bytes[$i]) % strlen($chars)];
 		}
 		return $pw;
+	}
+
+
+	/**
+	 * @param   integer		$userid		The user id
+	 * @param	string		$key		The profile key
+	 * @param	string		$default	The default value
+	 *
+	 * @return  string
+	 *
+	 * @since   3.8.5
+	 */
+	private function getProfile($userid, $key, $default = '')
+	{
+		JLog::add(new JLogEntry(__METHOD__, JLog::DEBUG, 'plg_authentication_spid'));
+
+		$value = '';
+		$params = new Registry(JPluginHelper::getPlugin('user', 'spid')->params);
+		if ($params->get('profile', false))
+		{
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true)
+				->select($db->qn('profile_value'))
+				->from($db->qn('#__user_profiles'))
+				->where($db->qn('user_id') . ' = ' . (int)$userid)
+				->where($db->qn('profile_key') . ' = ' . $db->q('profile.' . $key));
+			$db->setQuery($query);
+			$value = json_decode($db->LoadResult());
+		}
+
+		return $value ?: $default;
 	}
 }

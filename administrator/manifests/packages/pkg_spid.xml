@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension type="package" version="3.0" method="upgrade">
-  <name>pkg_spid</name>
-  <author>Helios Ciancio</author>
-  <creationDate>March 2018</creationDate>
-  <copyright>(C) 2017, 2018 Helios Ciancio. All rights reserved.</copyright>
-  <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
-  <packagename>spid</packagename>
-  <version>3.8.4</version>
-  <url>https://www.eshiol.it</url>
-  <packager>Helios Ciancio</packager>
-  <packagerurl>https://www.eshiol.it/</packagerurl>
-  <description>PKG_SPID_XML_DESCRIPTION</description>
-  <updateservers>
-    <server type="extension" priority="2" name="SPiD">https://www.eshiol.it/files/spid/spid.xml</server>
-  </updateservers>
-  <files>
-    <folder type="plugin" id="spid" group="authentication">plg_authentication_spid-3.8.2.zip</folder>
-    <folder type="plugin" id="spid" group="user">plg_user_spid-3.8.3.zip</folder>
-    <folder type="module" id="spid" client="site">mod_spid_login-3.8.4.zip</folder>
-  </files>
-  <languages folder="language">
-    <language tag="en-GB">en-GB/en-GB.pkg_spid.sys.ini</language>
-    <language tag="it-IT">it-IT/it-IT.pkg_spid.sys.ini</language>
-  </languages>
+	<name>pkg_spid</name>
+	<author>Helios Ciancio</author>
+	<creationDate>March 2018</creationDate>
+	<copyright>(C) 2017, 2018 Helios Ciancio. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
+	<packagename>spid</packagename>
+	<version>3.8.5</version>
+	<url>https://www.eshiol.it</url>
+	<packager>Helios Ciancio</packager>
+	<packagerurl>https://www.eshiol.it/</packagerurl>
+	<description>PKG_SPID_XML_DESCRIPTION</description>
+	<updateservers>
+		<server type="extension" priority="2" name="SPiD">https://www.eshiol.it/files/spid/spid.xml</server>
+	</updateservers>
+	<files>
+		<folder type="plugin" id="spid" group="authentication">plg_authentication_spid-3.8.5.zip</folder>
+		<folder type="plugin" id="spid" group="user">plg_user_spid-3.8.5.zip</folder>
+		<folder type="module" id="spid_login" client="site">mod_spid_login-3.8.4.zip</folder>
+		<folder type="module" id="spid_loa" client="site">mod_spid_loa-3.8.5.zip</folder>
+	</files>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.pkg_spid.sys.ini</language>
+		<language tag="it-IT">it-IT/it-IT.pkg_spid.sys.ini</language>
+	</languages>
 </extension>
