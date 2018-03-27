@@ -14,6 +14,7 @@
 	</updateservers>
 	<files>
 		<filename plugin="spid">spid.php</filename>
+		<filename>fiscalnumber.php</filename>
 		<filename>registration.php</filename>
 	</files>
 	<languages folder="language">
@@ -30,8 +31,8 @@
 				<field
 					name="removeTINPrefix"
 					type="radio"
-					label="PLG_AUTHENTICATION_SPID_CONFIG_FIELD_REMOVEPREFIX_LABEL"
-					description="PLG_AUTHENTICATION_SPID_CONFIG_FIELD_REMOVEPREFIX_DESC"
+					label="PLG_AUTHENTICATION_SPID_FIELD_REMOVEPREFIX_LABEL"
+					description="PLG_AUTHENTICATION_SPID_FIELD_REMOVEPREFIX_DESC"
 					class="btn-group btn-group-yesno"
 					default="1"
 					>
@@ -45,8 +46,8 @@
 				<field
 					name="allowUserRegistration"
 					type="list"
-					description="PLG_AUTHENTICATION_SPID_CONFIG_FIELD_ALLOWREGISTRATION_DESC"
-					label="PLG_AUTHENTICATION_SPID_CONFIG_FIELD_ALLOWREGISTRATION_LABEL"
+					description="PLG_AUTHENTICATION_SPID_FIELD_ALLOWREGISTRATION_DESC"
+					label="PLG_AUTHENTICATION_SPID_FIELD_ALLOWREGISTRATION_LABEL"
 					>
 					<option
 						value="">JGLOBAL_USE_GLOBAL
@@ -61,8 +62,8 @@
 				<field
 					name="allowEmailAuthentication"
 					type="list"
-					description="PLG_AUTHENTICATION_SPID_CONFIG_FIELD_ALLOWEMAILAUTHENTICATION_DESC"
-					label="PLG_AUTHENTICATION_SPID_CONFIG_FIELD_ALLOWEMAILAUTHENTICATION_LABEL"
+					description="PLG_AUTHENTICATION_SPID_FIELD_ALLOWEMAILAUTHENTICATION_DESC"
+					label="PLG_AUTHENTICATION_SPID_FIELD_ALLOWEMAILAUTHENTICATION_LABEL"
 					default="0"
 					>
 					<option
@@ -72,14 +73,14 @@
 						value="1">JYES
 					</option>
 					<option
-						value="2">PLG_AUTHENTICATION_SPID_CONFIG_FIELD_ALLOWEMAILAUTHENTICATION_UPDATE
+						value="2">PLG_AUTHENTICATION_SPID_FIELD_ALLOWEMAILAUTHENTICATION_UPDATE
 					</option>
 				</field>
 				<field
-					name="minimumLoA"
+					name="loa"
 					type="list"
-					description="PLG_AUTHENTICATION_SPID_CONFIG_FIELD_MINIMUMLOA_DESC"
-					label="PLG_AUTHENTICATION_SPID_CONFIG_FIELD_MINIMUMLOA_LABEL"
+					description="PLG_AUTHENTICATION_SPID_FIELD_LOA_DESC"
+					label="PLG_AUTHENTICATION_SPID_FIELD_LOA_LABEL"
 					default="SpidL1"
 					>
 					<option

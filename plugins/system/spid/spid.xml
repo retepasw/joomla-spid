@@ -1,5 +1,5 @@
-<extension version="3.0" type="plugin" group="user" method="upgrade">
-	<name>plg_user_spid</name>
+<extension version="3.0" type="plugin" group="system" method="upgrade">
+	<name>plg_system_spid</name>
 	<author>Helios Ciancio</author>
 	<creationDate>March 2018</creationDate>
 	<copyright>(C) 2017, 2018 Helios Ciancio. All rights reserved.</copyright>
@@ -7,19 +7,18 @@
 	<authorEmail>info@eshiol.it</authorEmail>
 	<authorUrl>www.eshiol.it</authorUrl>
 	<version>3.8.5</version>
-	<description>PLG_USER_SPID_XML_DESCRIPTION</description>
+	<description>PLG_SYSTEM_SPID_XML_DESCRIPTION</description>
 	<updateservers>
-		<server type="extension" priority="2" name="User - SPiD">https://www.eshiol.it/files/spid/plg_user_spid.xml</server>
+		<server type="extension" priority="2" name="System - SPiD">https://www.eshiol.it/files/spid/plg_system_spid.xml</server>
 	</updateservers>
 	<files>
 		<filename plugin="spid">spid.php</filename>
-		<folder>profiles</folder>
 	</files>
 	<languages folder="language">
-		<language tag="en-GB">en-GB/en-GB.plg_user_spid.ini</language>
-		<language tag="en-GB">en-GB/en-GB.plg_user_spid.sys.ini</language>
-		<language tag="it-IT">it-IT/it-IT.plg_user_spid.ini</language>
-		<language tag="it-IT">it-IT/it-IT.plg_user_spid.sys.ini</language>
+		<language tag="en-GB">en-GB/en-GB.plg_system_spid.ini</language>
+		<language tag="en-GB">en-GB/en-GB.plg_system_spid.sys.ini</language>
+		<language tag="it-IT">it-IT/it-IT.plg_system_spid.ini</language>
+		<language tag="it-IT">it-IT/it-IT.plg_system_spid.sys.ini</language>
 	</languages>
 	<config>
 		<fields name="params">
@@ -29,8 +28,8 @@
 				<field
 					name="debug"
 					type="radio"
-					description="PLG_USER_SPID_DEBUG_SYSTEM_DESC"
-					label="PLG_USER_SPID_DEBUG_SYSTEM_LABEL"
+					description="PLG_SYSTEM_SPID_DEBUG_SYSTEM_DESC"
+					label="PLG_SYSTEM_SPID_DEBUG_SYSTEM_LABEL"
 					class="btn-group btn-group-yesno"
 					default="0"
 					>
@@ -44,16 +43,16 @@
 				<field
 					name="log"
 					type="text"
-					description="PLG_USER_SPID_DEBUG_FILENAME_DESC"
-					label="PLG_USER_SPID_DEBUG_FILENAME_LABEL"
+					description="PLG_SYSTEM_SPID_DEBUG_FILENAME_DESC"
+					label="PLG_SYSTEM_SPID_DEBUG_FILENAME_LABEL"
 					default="eshiol.log.php"
 					showon="debug:1"
 					/>
 				<field
 					name="phpconsole"
 					type="radio"
-					description="PLG_USER_SPID_DEBUG_PHPCONSOLE_DESC"
-					label="PLG_USER_SPID_DEBUG_PHPCONSOLE_LABEL"
+					description="PLG_SYSTEM_SPID_DEBUG_PHPCONSOLE_DESC"
+					label="PLG_SYSTEM_SPID_DEBUG_PHPCONSOLE_LABEL"
 					class="btn-group btn-group-yesno"
 					default="0"
 					>
