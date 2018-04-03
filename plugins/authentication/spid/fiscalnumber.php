@@ -74,19 +74,6 @@ class FiscalNumber
 				$this->normalizedFiscalNumber .= $x;
 			}
 		}
-
-		$this->gender = substr($this->normalizedFiscalNumber, 9, 1) > '3' ? 'F' : 'M';
-
-		$DD = substr($this->normalizedFiscalNumber, 9, 2);
-		$MM = $months[substr($this->normalizedFiscalNumber, 8, 1)];
-		$YYYY = '20' . substr($this->normalizedFiscalNumber, 6, 2);
-	
-		if ($YYYY.'-'.$MM.'-'.$DD  > JFactory::getDate()->toSql())
-		{
-			$YYYY = '19' . substr($this->normalizedFiscalNumber, 6, 2);
-		}
-
-		$this->birthdate = $DD . '-' . $MM . '-' . $YYYY;
 	}
 
 	/**
@@ -100,7 +87,36 @@ class FiscalNumber
 	}
 
 	/**
-	 * @return  string	The birth place
+	 * @return  string	The gender 'F'|'M'
+	 *
+	 * @since   3.8.5
+	 */
+	public function getGender()
+	{
+		return (int) substr ( $this->normalizedFiscalNumber, 9, 1 ) > 3 ? 'F' : 'M';
+	}
+	
+	/**
+	 * @return  string	The date of birth 
+	 *
+	 * @since   3.8.5
+	 */
+	public function getBirthDate()
+	{
+		$DD   = substr ( $this->normalizedFiscalNumber, 9, 2 );
+		$MM   = $months [ substr ( $this->normalizedFiscalNumber, 8, 1 ) ];
+		$YYYY = '20' . substr ( $this->normalizedFiscalNumber, 6, 2 );
+
+		if ( $YYYY . '-' . $MM . '-' . $DD  > JFactory::getDate()->toSql() )
+		{
+			$YYYY = '19' . substr ( $this->normalizedFiscalNumber, 6, 2 );
+		}
+
+		return $DD . '-' . $MM . '-' . $YYYY;
+	}
+
+	/**
+	 * @return  string	The place of birth
 	 *
 	 * @since   3.8.5
 	 */
