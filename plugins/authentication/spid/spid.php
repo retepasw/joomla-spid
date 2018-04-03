@@ -131,6 +131,30 @@ class plgAuthenticationSpid extends JPlugin
 			$attributes = $as->getAttributes();
 			JLog::add(new JLogEntry(print_r($attributes, true), JLog::DEBUG, 'plg_authentication_spid'));
 
+			if (!isset($attributes['fiscalNumber']))
+			{
+				$response->status        = JAuthentication::STATUS_FAILURE;
+				$response->error_message = JText::sprintf('PLG_AUTHENTICATION_SPID_ATTRIBUTE_ERROR', 'fiscalNumber');
+				
+				return;
+			}
+
+			if (!isset($attributes['name']))
+			{
+				$response->status        = JAuthentication::STATUS_FAILURE;
+				$response->error_message = JText::sprintf('PLG_AUTHENTICATION_SPID_ATTRIBUTE_ERROR', 'name');
+				
+				return;
+			}
+
+			if (!isset($attributes['familyName']))
+			{
+				$response->status        = JAuthentication::STATUS_FAILURE;
+				$response->error_message = JText::sprintf('PLG_AUTHENTICATION_SPID_ATTRIBUTE_ERROR', 'familyName');
+				
+				return;
+			}
+
 			if ($this->params->get('removeTINPrefix', true))
 			{
 				if( ($i = strpos($attributes['fiscalNumber'][0], '-')) !== false)
@@ -153,9 +177,15 @@ class plgAuthenticationSpid extends JPlugin
 				'fiscalNumber' => $fiscalNumber->getFiscalNumber(),
 				'firstName'    => $attributes['name'][0],
 				'lastName'     => $attributes['familyName'][0],
-				'gender'       => $attributes['gender'][0],
-				'dob'          => date("d-m-Y", strtotime($attributes['dateOfBirth'][0])),
-				'birthPlace'   => $fiscalNumber->getBirthPlace(),
+				'gender'       => isset($attributes['gender']) 
+					? $attributes['gender'][0] 
+					: $fiscalNumber->getGender(),
+				'dob'          => isset($attributes['dateOfBirth']) 
+					? date("d-m-Y", strtotime($attributes['dateOfBirth'][0]))
+					: $fiscalNumber->getBirthDate(),
+				'birthPlace'   => isset($attributes['placeOfBirth'])
+					? $attributes['placeOfBirth'][0]
+					: $fiscalNumber->getBirthPlace(),
 				'email'        => $attributes['email'][0],
 			);
 			JLog::add(new JLogEntry(print_r($spid_response, true), JLog::DEBUG, 'plg_authentication_spid'));
