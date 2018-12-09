@@ -2,7 +2,7 @@
 <extension type="package" version="3.0" method="upgrade">
 	<name>pkg_spid</name>
 	<author>Helios Ciancio</author>
-	<creationDate>April 2018</creationDate>
+	<creationDate>March 2018</creationDate>
 	<copyright>(C) 2017, 2018 Helios Ciancio. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
 	<packagename>spid</packagename>
