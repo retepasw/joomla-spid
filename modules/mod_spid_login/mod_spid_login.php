@@ -5,7 +5,7 @@
  *
  * @author		Helios Ciancio <info@eshiol.it>
  * @link		http://www.eshiol.it
- * @copyright	Copyright (C) 2017 Helios Ciancio. All Rights Reserved
+ * @copyright	Copyright (C) 2017, 2018 Helios Ciancio. All Rights Reserved
  * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3
  * SPiD for Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -17,7 +17,7 @@
 defined('_JEXEC') or die;
 
 /**
- * @version		3.8.0
+ * @version		3.8.5
  * @since		3.7
  */
 
@@ -29,22 +29,38 @@ $type               = ModLoginHelper::getType();
 $return             = ModLoginHelper::getReturnUrl($params, $type);
 $layout             = $params->get('layout', 'default');
 
-if (file_exists($metadata_file = JPATH_ROOT.'/simplespidphp/metadata/saml20-idp-remote.php'))
+if (file_exists(JPATH_ROOT.'/simplespidphp/metadata/saml20-idp-remote.php'))
 {
-	require $metadata_file;
-	require JModuleHelper::getLayoutPath('mod_spid_login', $layout);
+	$basepath = JPATH_ROOT . '/simplespidphp';
 }
-elseif (file_exists($metadata_file = JPATH_ROOT.'/../simplespidphp/metadata/saml20-idp-remote.php'))
+elseif (file_exists(JPATH_ROOT.'/../simplespidphp/metadata/saml20-idp-remote.php'))
 {
-	require $metadata_file;
-	require JModuleHelper::getLayoutPath('mod_spid_login', $layout);
+	$basepath = JPATH_ROOT . '/../simplespidphp';
 }
-elseif (file_exists($metadata_file = JPATH_LIBRARIES.'/pasw/simplespidphp/metadata/saml20-idp-remote.php'))
+elseif (file_exists(JPATH_LIBRARIES.'/pasw/simplespidphp/metadata/saml20-idp-remote.php'))
 {
-	require $metadata_file;
-	require JModuleHelper::getLayoutPath('mod_spid_login', $layout);
+	$basepath = JPATH_LIBRARIES . '/pasw/simplespidphp';
 }
 else
 {
-	JLog::add(new JLogEntry('Impossible to load SPiD IDP\'s metadata: saml20-idp-remote.php', JLog::DEBUG, 'mod_spid_login'));
+	$basepath = '';
+}
+
+if ($basepath)
+{
+	include $basepath . '/config/authsources.php';
+	
+	if (file_exists($basepath . '/cert/' . $config['default-sp']['privatekey']))
+	{
+		require $basepath . '/metadata/saml20-idp-remote.php';
+		require JModuleHelper::getLayoutPath('mod_spid_login', $layout);
+	}
+	else
+	{
+		JLog::add(new JLogEntry(JText::_('MOD_SPID_LOGIN_CERTNOTFOUND'), JLog::DEBUG, 'mod_spid_login'));
+	}
+} 
+else
+{
+	JLog::add(new JLogEntry('MOD_SPID_LOGIN_METADATANOTFOUND', JLog::DEBUG, 'mod_spid_login'));
 }
