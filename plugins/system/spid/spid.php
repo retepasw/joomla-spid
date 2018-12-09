@@ -15,8 +15,6 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
-
 /**
  * @version		3.8.6
  */
@@ -85,7 +83,7 @@ class plgSystemSpid extends JPlugin
 		{
 			$this->basePath = null;
 		}
-		$isAdmin = Factory::getApplication()->isClient('administrator') && !Factory::getUser()->guest;
+		$isAdmin = JFactory::getApplication()->isClient('administrator') && !JFactory::getUser()->guest;
 		if ($this->basePath)
 		{
 			include $this->basePath . '/config/authsources.php';
@@ -116,7 +114,7 @@ class plgSystemSpid extends JPlugin
 
 		if (!$this->params->get('cert_o'))
 		{
-			$this->params->set('cert_o', Factory::getConfig()->get('sitename'));
+			$this->params->set('cert_o', JFactory::getConfig()->get('sitename'));
 			$save = true;
 		}
 
@@ -179,7 +177,7 @@ class plgSystemSpid extends JPlugin
 		if ($input->$method->get('o')) $dn["organizationName"] = $input->$method->get('o');
 		if ($input->$method->get('ou')) $dn["organizationalUnitName"] = $input->$method->get('ou');
 		if ($input->$method->get('cn')) $dn["commonName"] = $input->$method->get('cn');
-		$dn["emailAddress"] = Factory::getConfig()->get('mailfrom');
+		$dn["emailAddress"] = JFactory::getConfig()->get('mailfrom');
 
 		// Generate a new private (and public) key pair
 		$privkey = openssl_pkey_new(array(
@@ -197,7 +195,7 @@ class plgSystemSpid extends JPlugin
 			}
 
 			echo json_encode($response);
-			Factory::getApplication()->close();
+			JFactory::getApplication()->close();
 			return;
 		}		
 
@@ -213,7 +211,7 @@ class plgSystemSpid extends JPlugin
 			}
 			
 			echo json_encode($response);
-			Factory::getApplication()->close();
+			JFactory::getApplication()->close();
 			return;
 		}
 		
@@ -240,6 +238,6 @@ class plgSystemSpid extends JPlugin
 		JLog::add(new JLogEntry(json_encode($response), JLog::DEBUG, 'plg_system_spid'));
 
 		// Close the application.
-		Factory::getApplication()->close();
+		JFactory::getApplication()->close();
 	}
 }
