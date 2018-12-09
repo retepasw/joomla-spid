@@ -28,7 +28,6 @@ class plgSystemSpid extends JPlugin
 	 */
 	protected $app;
 
-	
 	/**
 	 * The base path of the library
 	 *
