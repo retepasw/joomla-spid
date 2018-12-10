@@ -49,8 +49,6 @@ class FiscalNumber
 	 */
 	function __construct($fiscalNumber)
 	{
-		static $months = array('A' => '01', 'B' => '02', 'C' => '03', 'D' => '04', 'E' => '05', 'H' => '06', 
-		                       'L' => '07', 'M' => '08', 'P' => '09', 'R' => '10', 'S' => '11', 'T' => '12');
 		static $normalize = array('L' => '0', 'M' => '1', 'N' => '2', 'P' => '3', 'Q' => '4', 'R' => '5', 'S' => '6', 'T' => '7', 'U' => '8', 'V' => '9');
 		static $normalizeP = array(6, 7, 9, 10, 12, 13, 14);
 
@@ -74,19 +72,6 @@ class FiscalNumber
 				$this->normalizedFiscalNumber .= $x;
 			}
 		}
-
-		$this->gender = substr($this->normalizedFiscalNumber, 9, 1) > '3' ? 'F' : 'M';
-
-		$DD = substr($this->normalizedFiscalNumber, 9, 2);
-		$MM = $months[substr($this->normalizedFiscalNumber, 8, 1)];
-		$YYYY = '20' . substr($this->normalizedFiscalNumber, 6, 2);
-	
-		if ($YYYY.'-'.$MM.'-'.$DD  > JFactory::getDate()->toSql())
-		{
-			$YYYY = '19' . substr($this->normalizedFiscalNumber, 6, 2);
-		}
-
-		$this->birthdate = $DD . '-' . $MM . '-' . $YYYY;
 	}
 
 	/**
@@ -100,7 +85,39 @@ class FiscalNumber
 	}
 
 	/**
-	 * @return  string	The birth place
+	 * @return  string	The gender 'F'|'M'
+	 *
+	 * @since   3.8.5
+	 */
+	public function getGender()
+	{
+		return (int) substr ( $this->normalizedFiscalNumber, 9, 1 ) > 3 ? 'F' : 'M';
+	}
+	
+	/**
+	 * @return  string	The date of birth 
+	 *
+	 * @since   3.8.5
+	 */
+	public function getBirthDate()
+	{
+		static $months = array('A' => '01', 'B' => '02', 'C' => '03', 'D' => '04', 'E' => '05', 'H' => '06',
+			'L' => '07', 'M' => '08', 'P' => '09', 'R' => '10', 'S' => '11', 'T' => '12');
+
+		$DD   = substr ( $this->normalizedFiscalNumber, 9, 2 );
+		$MM   = $months [ substr ( $this->normalizedFiscalNumber, 8, 1 ) ];
+		$YYYY = '20' . substr ( $this->normalizedFiscalNumber, 6, 2 );
+
+		if ( $YYYY . '-' . $MM . '-' . $DD  > JFactory::getDate()->toSql() )
+		{
+			$YYYY = '19' . substr ( $this->normalizedFiscalNumber, 6, 2 );
+		}
+
+		return $DD . '-' . $MM . '-' . $YYYY;
+	}
+
+	/**
+	 * @return  string	The place of birth
 	 *
 	 * @since   3.8.5
 	 */

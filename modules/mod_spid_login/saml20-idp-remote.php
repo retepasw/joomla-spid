@@ -752,3 +752,83 @@ $metadata['https://spid.intesa.it'] = array (
     ),
   ),
 );
+
+// LEPIDA ID
+
+$metadata['https://id.lepida.it/idp/shibboleth'] = array (
+		'entityid' => 'https://id.lepida.it/idp/shibboleth',
+		'description' =>
+		array (
+				'it' => 'Lepida S.p.A.',
+		),
+		'OrganizationName' =>
+		array (
+				'it' => 'Lepida S.p.A.',
+		),
+		'name' =>
+		array (
+				'it' => 'Lepida S.p.A.',
+		),
+		'OrganizationDisplayName' =>
+		array (
+				'it' => 'Lepida S.p.A.',
+		),
+		'url' =>
+		array (
+				'it' => 'https://www.lepida.it/',
+		),
+		'OrganizationURL' =>
+		array (
+				'it' => 'https://www.lepida.it/',
+		),
+		'contacts' =>
+		array (
+		),
+		'metadata-set' => 'saml20-idp-remote',
+		'sign.authnrequest' => true,
+		'SingleSignOnService' =>
+		array (
+				0 =>
+				array (
+						'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
+						'Location' => 'https://id.lepida.it/idp/profile/SAML2/POST/SSO',
+				),
+				1 =>
+				array (
+						'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
+						'Location' => 'https://id.lepida.it/idp/profile/SAML2/Redirect/SSO',
+				),
+		),
+		'SingleLogoutService' =>
+		array (
+				0 =>
+				array (
+						'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
+						'Location' => 'https://id.lepida.it/idp/profile/SAML2/POST/SLO',
+				),
+				1 =>
+				array (
+						'Binding' => 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
+						'Location' => 'https://id.lepida.it/idp/profile/SAML2/Redirect/SLO',
+				),
+		),
+		'ArtifactResolutionService' =>
+		array (
+		),
+		'NameIDFormats' =>
+		array (
+				0 => 'urn:oasis:names:tc:SAML:2.0:nameid-format:transient',
+		),
+		'keys' =>
+		array (
+				0 =>
+				array (
+						'encryption' => false,
+						'signing' => true,
+						'type' => 'X509Certificate',
+						'X509Certificate' => '
+MIIDHDCCAgSgAwIBAgIVALisbudTRxLy3vlMcEDfaqr3iW89MA0GCSqGSIb3DQEB CwUAMBcxFTATBgNVBAMMDGlkLmxlcGlkYS5pdDAeFw0xODA4MDgxMDIzMTJaFw0z ODA4MDgxMDIzMTJaMBcxFTATBgNVBAMMDGlkLmxlcGlkYS5pdDCCASIwDQYJKoZI hvcNAQEBBQADggEPADCCAQoCggEBAMOFERgxPEYPqAjN7oW6y8oSSY6tGm2OCIU+ VyKhb2OqfNLpF8tPrytX17pgwVYHzjxRCNMTC83frbmtBapABtm9KuX7qaSPvaJx 0+UqYk9FdKCKQOEkmWcNOJfwzNMP65B+cDxP3sa1JoAMeAO0x95bnYoX0ZHcssKk wpgMb8/JHZHzqu3odxADtO5PaT3xaCyMIcqIp1O2nVn7SizUE1gNucLAdaP4kh0o 7nU61pz4pG3gQXK+uROteDD8cTU2Nxi7W1T73tQSuwst54BS2p9IBXzWrA9V0Ck1 0oiQTcIC8X9McepCrNzgCOBdap00Tifusb30t74BREARgwjp1N8CAwEAAaNfMF0w HQYDVR0OBBYEFL32/n7uf1Re14pW+gwGxZQHUZBCMDwGA1UdEQQ1MDOCDGlkLmxl cGlkYS5pdIYjaHR0cHM6Ly9pZC5sZXBpZGEuaXQvaWRwL3NoaWJib2xldGgwDQYJ KoZIhvcNAQELBQADggEBAK80B1mEWKOTJkVJOJot2xU79Lhs1+domUSYQiA+tlS4 6IAfWwDZqI1llIjgL85n7qMsKFvYTIskInoG51Iezv2dTxlB6IMI8NPRfiFXo2s8 NYjbzWyETbdXzCbDR0tKNke0TFE0oxunNfE5YRsmH4bPnjhPUjCSHX7wIhlNrLae 3FjMQp1OLDs7HmJo3AhuAVmHCoG7QV/ly4ZHcVYx4F7HUsFg5uxNYjZbo+XMutJz 4nZFOFE+uRzTwwfdR2sxny+ppkruTwIhEXyzknoiw1mGIEWZc6scnOAiwZeqTccU YVNHp+PSFs9SD8l+2PO4Oh8Y3dYT+5ojv+S6T7vy5xE=
+					',
+				),
+		),
+);

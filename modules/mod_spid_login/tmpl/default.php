@@ -17,7 +17,7 @@
 defined('_JEXEC') or die;
 
 /**
- * @version		3.8.4
+ * @version		3.8.6
  * @since		3.7
  */
 
@@ -63,6 +63,7 @@ $mod_spid_login = 'mod-spid-login-' . $module->id;
 					'arubaid' => 	'https://loginspid.aruba.it',
 					'infocertid' => 'https://identity.infocert.it',
 					'intesaid' => 	'https://spid.intesa.it',
+					'lepidaid' =>	'https://id.lepida.it/idp/shibboleth',
 					'namirialid' => 'https://idp.namirialtsp.com/idp',
 					'posteid' => 	'https://posteid.poste.it',
 					'sielteid' => 	'https://identity.sieltecloud.it',
@@ -73,7 +74,7 @@ $mod_spid_login = 'mod-spid-login-' . $module->id;
 				<?php
 				if (!isset($metadata[$entityid]['description']))
 				{
-					$description = $id;
+					$description = $idp;
 				}
 				elseif(isset($metadata[$entityid]['description']['it']))
 				{

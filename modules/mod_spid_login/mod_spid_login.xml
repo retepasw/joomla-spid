@@ -2,12 +2,12 @@
 <extension version="3.0" type="module" client="site" method="upgrade">
   <name>mod_spid_login</name>
   <author>Helios Ciancio</author>
-  <creationDate>March 2018</creationDate>
+  <creationDate>December 2018</creationDate>
   <copyright>(C) 2017, 2018 Helios Ciancio. All rights reserved.</copyright>
   <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
   <authorEmail>info@eshiol.it</authorEmail>
   <authorUrl>www.eshiol.it</authorUrl>
-  <version>3.8.4</version>
+  <version>3.8.6</version>
   <description>MOD_SPID_LOGIN_XML_DESCRIPTION</description>
   <scriptfile>script.php</scriptfile>
   <updateservers>
@@ -78,6 +78,10 @@
           <option value="0">JNO</option>
         </field>
         <field name="show_namirialid" type="radio" description="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONNAMIRIALID_DESC" label="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONNAMIRIALID_LABEL" class="btn-group btn-group-yesno" default="1">
+          <option value="1">JYES</option>
+          <option value="0">JNO</option>
+        </field>
+        <field name="show_lepidaid" type="radio" description="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONLEPIDALID_DESC" label="MOD_SPID_LOGIN_FIELD_SHOW_BUTTONLEPIDAID_LABEL" class="btn-group btn-group-yesno" default="1">
           <option value="1">JYES</option>
           <option value="0">JNO</option>
         </field>
