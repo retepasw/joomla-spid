@@ -2,12 +2,12 @@
 <extension version="3.0" type="module" client="site" method="upgrade">
   <name>mod_spid_login</name>
   <author>Helios Ciancio</author>
-  <creationDate>December 2018</creationDate>
+  <creationDate>February 2019</creationDate>
   <copyright>(C) 2017, 2018 Helios Ciancio. All rights reserved.</copyright>
   <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
   <authorEmail>info@eshiol.it</authorEmail>
   <authorUrl>www.eshiol.it</authorUrl>
-  <version>3.8.6</version>
+  <version>3.8.7</version>
   <description>MOD_SPID_LOGIN_XML_DESCRIPTION</description>
   <scriptfile>script.php</scriptfile>
   <updateservers>
