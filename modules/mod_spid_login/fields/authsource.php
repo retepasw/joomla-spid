@@ -3,9 +3,9 @@
  * @package		SPiD
  * @subpackage	mod_spid_login
  *
- * @author		Helios Ciancio <info@eshiol.it>
+ * @author		Helios Ciancio <info (at) eshiol (dot) it>
  * @link		http://www.eshiol.it
- * @copyright	Copyright (C) 2017 Helios Ciancio. All Rights Reserved
+ * @copyright	Copyright (C) 2017 - 2019 Helios Ciancio. All Rights Reserved
  * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3
  * SPiD for Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -21,7 +21,7 @@ JFormHelper::loadFieldClass('list');
 /**
  * Form Field class for the Authsource.
  *
- * @version		3.8.0
+ * @version		3.8.7
  * @since		3.7.5
  */
 class JFormFieldAuthsource extends JFormFieldList

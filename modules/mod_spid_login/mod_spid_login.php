@@ -17,7 +17,7 @@
 defined('_JEXEC') or die;
 
 /**
- * @version		3.8.6
+ * @version		3.8.7
  * @since		3.7
  */
 
