@@ -180,11 +180,9 @@ class plgSystemSpid extends JPlugin
 			$e = $s['SimpleSAML_Auth_State.exceptionData'];
 			$lang = JFactory::getLanguage();
 			$message = $e->getMessage();
-            		$MESSAGE = str_replace(' ', '_', strtoupper($message));
-            		$error_suffix = ( strpos( $MESSAGE, '_ERRORCODE_NR' ) !== false )
-                            ? substr( $MESSAGE , ( strpos( $MESSAGE, '_ERRORCODE_NR' ) + 1 ) )
-                            : $MESSAGE;
-			$key = 'PLG_SYSTEM_SPID_' . $error_suffix;
+			$m = str_replace(' ', '_', strtoupper($message));
+			$esfx = (strpos($m, '_ERRORCODE_NR') !== false) ? substr($m, (strpos($m, '_ERRORCODE_NR') + 1)) : $m;
+			$key = 'PLG_SYSTEM_SPID_' . $esfx;
 			JLog::add(
 					new JLogEntry($lang->hasKey($key) ? JText::_($key) : JText::sprintf('PLG_SYSTEM_SPID_ERRORCODE_UNKNOWN', $message), JLog::WARNING,
 							'plg_system_spid'));
