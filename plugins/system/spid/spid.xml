@@ -1,12 +1,12 @@
 <extension version="3.0" type="plugin" group="system" method="upgrade">
 	<name>plg_system_spid</name>
 	<author>Helios Ciancio</author>
-	<creationDate>October 2018</creationDate>
+	<creationDate>February 2019</creationDate>
 	<copyright>(C) 2017, 2018 Helios Ciancio. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
 	<authorEmail>info@eshiol.it</authorEmail>
 	<authorUrl>www.eshiol.it</authorUrl>
-	<version>3.8.6</version>
+	<version>3.8.7</version>
 	<description>PLG_SYSTEM_SPID_XML_DESCRIPTION</description>
 	<updateservers>
 		<server type="extension" priority="2" name="System - SPiD">https://www.eshiol.it/files/spid/plg_system_spid.xml</server>
