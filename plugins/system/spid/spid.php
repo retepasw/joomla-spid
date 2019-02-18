@@ -3,9 +3,9 @@
  * @package		SPiD
  * @subpackage	plg_system_spid
  *
- * @author		Helios Ciancio <info@eshiol.it>
+ * @author		Helios Ciancio <info (at) eshiol (dot) it>
  * @link		http://www.eshiol.it
- * @copyright	Copyright (C) 2017, 2018 Helios Ciancio. All Rights Reserved
+ * @copyright	Copyright (C) 2017 - 2019 Helios Ciancio. All Rights Reserved
  * @license		http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3
  * SPiD for Joomla! is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -15,8 +15,9 @@
 defined('_JEXEC') or die();
 
 /**
+ * System SPiD Plugin.
  *
- * @version 3.8.6
+ * @version 3.8.7
  */
 class plgSystemSpid extends JPlugin
 {
@@ -55,7 +56,7 @@ class plgSystemSpid extends JPlugin
 	function __construct (&$subject, $config)
 	{
 		parent::__construct($subject, $config);
-	
+
 		if ($this->params->get('debug') || defined('JDEBUG') && JDEBUG)
 		{
 			JLog::addLogger(
@@ -83,7 +84,7 @@ class plgSystemSpid extends JPlugin
 			));
 		}
 		JLog::add(new JLogEntry(__METHOD__, JLog::DEBUG, 'plg_system_spid'));
-	
+
 		// Use Composers autoloading
 		if (file_exists(JPATH_ROOT . '/simplespidphp/lib/_autoload.php'))
 		{
@@ -93,10 +94,6 @@ class plgSystemSpid extends JPlugin
 		{
 			$this->basePath = JPATH_ROOT . '/../simplespidphp';
 		}
-		elseif (file_exists(JPATH_LIBRARIES . '/eshiol/simplespidphp/lib/_autoload.php'))
-		{
-			$this->basePath = JPATH_LIBRARIES . '/eshiol/simplespidphp';
-		}
 		else
 		{
 			$this->basePath = null;
@@ -105,7 +102,7 @@ class plgSystemSpid extends JPlugin
 		if ($this->basePath)
 		{
 			include $this->basePath . '/config/authsources.php';
-		
+	
 			if (file_exists($this->basePath . '/cert/' . $config['default-sp']['privatekey']))
 			{
 				if (! class_exists('SimpleSAML'))
@@ -122,20 +119,20 @@ class plgSystemSpid extends JPlugin
 		{
 			JLog::add(new JLogEntry(JText::_('PLG_SYSTEM_SPID_SIMPLESPIDPHPREQUIRED'), JLog::ERROR, 'plg_system_spid'));
 		}
-	
+
 		$save = false;
 		if (! $this->params->get('cert_cn'))
 		{
 			$this->params->set('cert_cn', $_SERVER['SERVER_NAME']);
 			$save = true;
 		}
-	
+
 		if (! $this->params->get('cert_o'))
 		{
 			$this->params->set('cert_o', JFactory::getConfig()->get('sitename'));
 			$save = true;
 		}
-	
+
 		if ($save)
 		{
 			// Save the parameters
@@ -146,14 +143,14 @@ class plgSystemSpid extends JPlugin
 			$table->bind(array(
 					'params' => $this->params->toString()
 			));
-		
+	
 			// check for error
 			if (! $table->check())
 			{
 				echo $table->getError();
 				return false;
 			}
-		
+	
 			// Save to database
 			if (! $table->store())
 			{
@@ -172,7 +169,7 @@ class plgSystemSpid extends JPlugin
 	public function onAfterInitialise ()
 	{
 		JLog::add(new JLogEntry(__METHOD__, JLog::DEBUG, 'plg_system_spid'));
-	
+
 		if (array_key_exists('SimpleSAML_Auth_State_exceptionId', $_REQUEST) && ! empty($_REQUEST['SimpleSAML_Auth_State_exceptionId']))
 		{
 			$id = $_REQUEST['SimpleSAML_Auth_State_exceptionId'];
@@ -192,10 +189,10 @@ class plgSystemSpid extends JPlugin
 	public function onAjaxGenCertificate ()
 	{
 		JLog::add(new JLogEntry(__METHOD__, JLog::DEBUG, 'plg_system_spid'));
-	
+
 		$input = $this->app->input;
 		$method = $input->getMethod();
-	
+
 		$dn = array();
 		if ($input->$method->get('c'))
 			$dn["countryName"] = $input->$method->get('c');
@@ -210,13 +207,13 @@ class plgSystemSpid extends JPlugin
 		if ($input->$method->get('cn'))
 			$dn["commonName"] = $input->$method->get('cn');
 		$dn["emailAddress"] = JFactory::getConfig()->get('mailfrom');
-	
+
 		// Generate a new private (and public) key pair
 		$privkey = openssl_pkey_new(array(
 				'private_key_bits' => 2048,
 				'private_key_type' => OPENSSL_KEYTYPE_RSA
 		));
-	
+
 		$response = array();
 		$response["success"] = true;
 		if ($privkey === false)
@@ -228,18 +225,18 @@ class plgSystemSpid extends JPlugin
 						$e
 				);
 			}
-		
+	
 			echo json_encode($response);
 			JFactory::getApplication()->close();
 			return;
 		}
-	
+
 		// Generate a certificate signing request
 		$csr = openssl_csr_new($dn, $privkey, array(
 				'digest_alg' => 'sha256'
 		));
 		JLog::add(new JLogEntry($csr, JLog::DEBUG, 'plg_system_spid'));
-	
+
 		if ($csr === false)
 		{
 			$response["success"] = false;
@@ -249,24 +246,24 @@ class plgSystemSpid extends JPlugin
 						$e
 				);
 			}
-		
+	
 			echo json_encode($response);
 			JFactory::getApplication()->close();
 			return;
 		}
-	
+
 		// Generate a self-signed cert, valid for 20 years
 		$days = $input->$method->get('days', 7305);
 		$x509 = openssl_csr_sign($csr, null, $privkey, $days, array(
 				'digest_alg' => 'sha256'
 		));
-	
+
 		// Save your private key, CSR and self-signed cert for later use
 		openssl_csr_export($csr, $csrout);
 		// ob_start(); var_dump($csrout); JLog::add(new
 		// JLogEntry(ob_get_contents(), JLog::DEBUG, 'plg_system_spid'));
 		// ob_end_clean();
-	
+
 		$path = $this->basePath . '/cert';
 		$now = new JDate();
 		$suffix = $now->format('YmdHis');
@@ -279,7 +276,7 @@ class plgSystemSpid extends JPlugin
 		// JLogEntry(ob_get_contents(), JLog::DEBUG, 'plg_system_spid'));
 		// ob_end_clean();
 		file_put_contents($path . '/saml.crt', $certout);
-	
+
 		if (JFile::exists($path . '/saml.pem'))
 		{
 			JFile::move('saml.pem', 'saml.' . $suffix . '.pem', $path);
@@ -291,9 +288,9 @@ class plgSystemSpid extends JPlugin
 		// JLogEntry(ob_get_contents(), JLog::DEBUG, 'plg_system_spid'));
 		// ob_end_clean();
 		file_put_contents($path . '/saml.pem', $pkeyout);
-	
+
 		$response["messages"]["success"][] = JText::_('PLG_SYSTEM_SPID_CERT_OK');
-	
+
 		echo json_encode($response);
 		JLog::add(new JLogEntry(json_encode($response), JLog::DEBUG, 'plg_system_spid'));
 

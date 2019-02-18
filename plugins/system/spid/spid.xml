@@ -1,15 +1,17 @@
 <extension version="3.0" type="plugin" group="system" method="upgrade">
 	<name>plg_system_spid</name>
 	<author>Helios Ciancio</author>
-	<creationDate>October 2018</creationDate>
-	<copyright>(C) 2017, 2018 Helios Ciancio. All rights reserved.</copyright>
+	<creationDate>February 2019</creationDate>
+	<copyright>(C) 2017 - 2018 Helios Ciancio. All rights reserved.
+	</copyright>
 	<license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL v3</license>
 	<authorEmail>info@eshiol.it</authorEmail>
 	<authorUrl>www.eshiol.it</authorUrl>
-	<version>3.8.6</version>
+	<version>3.8.7</version>
 	<description>PLG_SYSTEM_SPID_XML_DESCRIPTION</description>
 	<updateservers>
-		<server type="extension" priority="2" name="System - SPiD">https://www.eshiol.it/files/spid/plg_system_spid.xml</server>
+		<server type="extension" priority="2" name="System - SPiD">https://www.eshiol.it/files/spid/plg_system_spid.xml
+		</server>
 	</updateservers>
 	<files>
 		<filename plugin="spid">spid.php</filename>
@@ -23,113 +25,47 @@
 	</languages>
 	<config>
 		<fields name="params">
-			<fieldset
-				name="advanced"
-				>
-				<field
-					name="debug"
-					type="radio"
-					description="PLG_SYSTEM_SPID_DEBUG_SYSTEM_DESC"
-					label="PLG_SYSTEM_SPID_DEBUG_SYSTEM_LABEL"
-					class="btn-group btn-group-yesno"
-					default="0"
-					>
-					<option
-						value="0">JNO
+			<fieldset name="advanced">
+				<field name="debug" type="radio" description="PLG_SYSTEM_SPID_DEBUG_SYSTEM_DESC"
+					label="PLG_SYSTEM_SPID_DEBUG_SYSTEM_LABEL" class="btn-group btn-group-yesno"
+					default="0">
+					<option value="0">JNO
 					</option>
-					<option
-						value="1">JYES
+					<option value="1">JYES
 					</option>
 				</field>
-				<field
-					name="log"
-					type="text"
-					description="PLG_SYSTEM_SPID_DEBUG_FILENAME_DESC"
-					label="PLG_SYSTEM_SPID_DEBUG_FILENAME_LABEL"
-					default="eshiol.log.php"
-					showon="debug:1"
-					/>
-				<field
-					name="phpconsole"
-					type="radio"
-					description="PLG_SYSTEM_SPID_DEBUG_PHPCONSOLE_DESC"
-					label="PLG_SYSTEM_SPID_DEBUG_PHPCONSOLE_LABEL"
-					class="btn-group btn-group-yesno"
-					default="0"
-					>
-					<option
-						value="0">JNO
+				<field name="log" type="text" description="PLG_SYSTEM_SPID_DEBUG_FILENAME_DESC"
+					label="PLG_SYSTEM_SPID_DEBUG_FILENAME_LABEL" default="eshiol.log.php"
+					showon="debug:1" />
+				<field name="phpconsole" type="radio"
+					description="PLG_SYSTEM_SPID_DEBUG_PHPCONSOLE_DESC" label="PLG_SYSTEM_SPID_DEBUG_PHPCONSOLE_LABEL"
+					class="btn-group btn-group-yesno" default="0">
+					<option value="0">JNO
 					</option>
-					<option
-						value="1">JYES
+					<option value="1">JYES
 					</option>
 				</field>
 			</fieldset>
-			<fieldset
-				name="certificate"
-				label="PLG_SYSTEM_SPID_FIELDSET_CERTIFICATE_LABEL"
-				>
-				<field
-					name="cert_c"
-					type="text"
-					description="PLG_SYSTEM_SPID_CERT_C_DESC"
-					label="PLG_SYSTEM_SPID_CERT_C_LABEL"
-					default="US"
-					/>
-				<field
-					name="cert_st"
-					type="text"
-					description="PLG_SYSTEM_SPID_CERT_ST_DESC"
-					label="PLG_SYSTEM_SPID_CERT_ST_LABEL"
-					default="Kansas"
-					/>
-				<field
-					name="cert_l"
-					type="text"
-					description="PLG_SYSTEM_SPID_CERT_L_DESC"
-					label="PLG_SYSTEM_SPID_CERT_L_LABEL"
-					default="the city of Nowhere"
-					/>
-				<field
-					name="cert_o"
-					type="text"
-					description="PLG_SYSTEM_SPID_CERT_O_DESC"
-					label="PLG_SYSTEM_SPID_CERT_O_LABEL"
-					default=""
-					/>
-				<field
-					name="cert_ou"
-					type="text"
-					description="PLG_SYSTEM_SPID_CERT_OU_DESC"
-					label="PLG_SYSTEM_SPID_CERT_OU_LABEL"
-					default=""
-					/>
-				<field
-					name="cert_cn"
-					type="text"
-					description="PLG_SYSTEM_SPID_CERT_CN_DESC"
-					label="PLG_SYSTEM_SPID_CERT_CN_LABEL"
-					default=""
-					/>
-				<field
-					name="cert_password"
-					type="password"
-					description="PLG_SYSTEM_SPID_CERT_PASSWORD_DESC"
-					label="PLG_SYSTEM_SPID_CERT_PASSWORD_LABEL"
-					default=""
-					/>
-				<field
-					name="cert"
-					type="ajax"
-					description="PLG_SYSTEM_SPID_CERT_GEN_DESC"
-					label="PLG_SYSTEM_SPID_CERT_GEN_LABEL"
-					icon="icon-download"
-					group="system"
-					plugin="GenCertificate"
-					format="json"
-					fields="c,st,l,o,ou,cn,password"
-					addfieldpath="/plugins/system/spid/fields"
-					/>
+			<fieldset name="certificate" label="PLG_SYSTEM_SPID_FIELDSET_CERTIFICATE_LABEL">
+				<field name="cert_c" type="text" description="PLG_SYSTEM_SPID_CERT_C_DESC"
+					label="PLG_SYSTEM_SPID_CERT_C_LABEL" default="US" />
+				<field name="cert_st" type="text" description="PLG_SYSTEM_SPID_CERT_ST_DESC"
+					label="PLG_SYSTEM_SPID_CERT_ST_LABEL" default="Kansas" />
+				<field name="cert_l" type="text" description="PLG_SYSTEM_SPID_CERT_L_DESC"
+					label="PLG_SYSTEM_SPID_CERT_L_LABEL" default="the city of Nowhere" />
+				<field name="cert_o" type="text" description="PLG_SYSTEM_SPID_CERT_O_DESC"
+					label="PLG_SYSTEM_SPID_CERT_O_LABEL" default="" />
+				<field name="cert_ou" type="text" description="PLG_SYSTEM_SPID_CERT_OU_DESC"
+					label="PLG_SYSTEM_SPID_CERT_OU_LABEL" default="" />
+				<field name="cert_cn" type="text" description="PLG_SYSTEM_SPID_CERT_CN_DESC"
+					label="PLG_SYSTEM_SPID_CERT_CN_LABEL" default="" />
+				<field name="cert_password" type="password"
+					description="PLG_SYSTEM_SPID_CERT_PASSWORD_DESC" label="PLG_SYSTEM_SPID_CERT_PASSWORD_LABEL"
+					default="" />
+				<field name="cert" type="ajax" description="PLG_SYSTEM_SPID_CERT_GEN_DESC"
+					label="PLG_SYSTEM_SPID_CERT_GEN_LABEL" icon="icon-download" group="system"
+					plugin="GenCertificate" format="json" fields="c,st,l,o,ou,cn,password"
+					addfieldpath="/plugins/system/spid/fields" />
 			</fieldset>
 		</fields>
 	</config>
